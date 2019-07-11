@@ -1,0 +1,28 @@
+{
+  "title": "${tableNote}",
+  "fieldList": [
+
+<#list vueJsons as column>
+    <#if column_index != 0 >,</#if>{
+      <#if column.type == 'selection'>
+      "width":"60",
+      </#if>
+      "key":"${column.key!}",
+      "title":"${column.title!}",
+      "type":"${column.type!}",
+      "length":"${(column.length!255)?c}",
+      "isRequire":${column.require?string('true','false')},
+      "regStr":"${column.regStr!}",
+      "message":"${column.message!}",
+      "controlType":"${column.controlType!}",
+      "max":"${column.max!}",
+      "min":"${column.min!}",
+      "format":"${column.format!}",
+      "isShowColumn":${column.showColumn?string('true','false')},
+      "isWhere":${column.where?string('true','false')},
+      "javaWhere":"${column.javaWhere!}",
+      "javaType":"${column.javaType!}"
+    }
+</#list>
+  ]
+}
