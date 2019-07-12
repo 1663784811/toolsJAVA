@@ -20,6 +20,17 @@
             >
             </Table>
         </div>
+        <!--===========    分页     ==============-->
+        <div class="pageBox">
+            <Page show-total
+                  show-elevator
+                  show-sizer
+                  :total="requestTableData.total"
+                  :page-size="requestTableData.size"
+                  @on-change="clickChangePage"
+                  @on-page-size-change="clickChangeSize"
+            />
+        </div>
         <!--===========    操作弹出层     ==============-->
         <BaseWindow ref="winRef"
                     :show.sync="winShow"
@@ -90,6 +101,7 @@
                 requestTableData: {//请求表格数据参数
                     page: 1,
                     size: 30,
+                    total:0,
                     sort: "${operationTools.allToLowerCase(primarykey)}_desc"
                 },
                 submitData: {},//添加修改提交数据,
@@ -175,6 +187,10 @@
                 this.requestTableData.page = page;
                 this.requestTableDataFn();
             },
+            clickChangeSize: function (size) {
+                this.requestTableData.size = size;
+                this.requestTableDataFn();
+            },
             //======================================================================   请求数据
             //表格数据
             requestTableDataFn: function () {
@@ -240,4 +256,6 @@
             border-top: 1px solid #eee;
             background: #fff;
             z-index: 10;
+            position: absolute;
+            bottom: 0;
 </style>
