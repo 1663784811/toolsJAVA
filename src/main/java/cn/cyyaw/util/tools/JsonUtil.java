@@ -1,73 +1,46 @@
 package cn.cyyaw.util.tools;
 
-
-
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.*;
+import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
 
-import java.io.Writer;
+import java.util.Set;
 
-public class JsonUtil extends JSON{
-
-
+public class JsonUtil extends JSON {
     /**
-     * 将转换成的json写入http的返回中
-     *
-     * @param object   待转换的对象
-     * @param writer   http的写入对象
-     * @param filter   过滤器
-     * @param features 特征库
+     * 过滤序列化
      */
-    public static final void writeJSONStringTo(final Object object, final Writer writer, final SerializeFilter filter, final SerializerFeature... features) {
-        SerializeWriter out = new SerializeWriter(writer);
-
-        try {
-            JSONSerializer serializer = new JSONSerializer(out);
-            for (SerializerFeature feature : features) {
-                serializer.config(feature, true);
+    public static final String toJSONStringFilter(final Object object, String... filter) {
+        if (null != object) {
+            if (null != filter) {
+                SimplePropertyPreFilter f = new SimplePropertyPreFilter();
+                Set<String> excludes = f.getExcludes();
+                for (String fstr : filter) {
+                    excludes.add(fstr);
+                }
+                return toJSONString(object, f);
+            } else {
+                return toJSONString(object);
             }
-
-            setFilter(serializer, filter);
-            serializer.write(object);
-        } finally {
-            out.close();
         }
+        return null;
     }
 
     /**
-     * 设置过滤器，强制某些字段不会转换
-     *
-     * @param serializer 转换构造器
-     * @param filter     过滤器
+     * 允许序列化
      */
-    private static void setFilter(final JSONSerializer serializer, final SerializeFilter filter) {
-        if (filter == null) {
-            return;
+    public static final String toJSONStringAllow(final Object object, String... filter) {
+        if (null != object) {
+            if (null != filter) {
+                SimplePropertyPreFilter f = new SimplePropertyPreFilter();
+                Set<String> includes = f.getIncludes();
+                for (String fstr : filter) {
+                    includes.add(fstr);
+                }
+                return toJSONString(object, f);
+            } else {
+                return toJSONString(object);
+            }
         }
-
-        if (filter instanceof PropertyPreFilter) {
-            serializer.getPropertyPreFilters().add((PropertyPreFilter) filter);
-        }
-
-        if (filter instanceof NameFilter) {
-            serializer.getNameFilters().add((NameFilter) filter);
-        }
-
-        if (filter instanceof ValueFilter) {
-            serializer.getValueFilters().add((ValueFilter) filter);
-        }
-
-        if (filter instanceof PropertyFilter) {
-            serializer.getPropertyFilters().add((PropertyFilter) filter);
-        }
-
-        if (filter instanceof BeforeFilter) {
-            serializer.getBeforeFilters().add((BeforeFilter) filter);
-        }
-
-        if (filter instanceof AfterFilter) {
-            serializer.getAfterFilters().add((AfterFilter) filter);
-        }
+        return null;
     }
-
 }

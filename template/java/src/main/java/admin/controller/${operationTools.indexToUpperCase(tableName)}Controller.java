@@ -3,11 +3,12 @@ package ${basePackage}.admin.controller;
 import ${basePackage}.admin.service.${operationTools.indexToUpperCase(tableName)}Service;
 import ${basePackage}.admin.table.${operationTools.allToLowerCase(tableName)}.${operationTools.indexToUpperCase(tableName)};
 import ${basePackage}.admin.table.${operationTools.allToLowerCase(tableName)}.${operationTools.indexToUpperCase(tableName)}Constants;
-import ${basePackage}.common.tools.JpaUtils;
-import ${basePackage}.common.tools.WhyBeanUtils;
-import ${basePackage}.system.jpa.BaseConstants;
-import ${basePackage}.system.jpa.model.SelectEntity;
-import ${basePackage}.system.jpa.model.SelectModel;
+
+import cn.cyyaw.jpa.BaseConstants;
+import cn.cyyaw.util.entity.SelectModel;
+import cn.cyyaw.util.tools.JpaUtils;
+import cn.cyyaw.util.tools.ResponseUtils;
+import cn.cyyaw.util.tools.WhyBeanUtils;
 
 <#list javaColumns as column>
     <#if column.fktable>
@@ -16,13 +17,13 @@ import ${basePackage}.admin.table.${operationTools.allToLowerCase(column.pkTable
     </#if>
 </#list>
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -88,55 +89,41 @@ public class ${operationTools.indexToUpperCase(tableName)}Controller {
     private ${operationTools.indexToUpperCase(tableName)}Service ${operationTools.indexToLowerCase(tableName)}Service;
 
     /**
-     * 所有:带条件
+     * 表:${tableName} ===> 所有:带条件
      */
     @RequestMapping(value = "/findAll${operationTools.indexToUpperCase(tableName)}", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Map> findAll${operationTools.indexToUpperCase(tableName)}(String jsonStr, SelectModel selectModel) {
-        // 1. ======  查询数据
-        List<${operationTools.indexToUpperCase(tableName)}> ${operationTools.indexToLowerCase(tableName)}List = ${operationTools.indexToLowerCase(tableName)}Service.findAll(jsonStr, selectModel);
-        // 2. ======   整理数据返回==== 过滤字段====map输出
-        return WhyBeanUtils.filterListBean2ListMap(${operationTools.indexToLowerCase(tableName)}List, ${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
+    public void findAll${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response, String jsonStr, SelectModel selectModel) {
+        List<${operationTools.indexToUpperCase(tableName)}> list = ${operationTools.indexToLowerCase(tableName)}Service.findAll(jsonStr, selectModel);
+        ResponseUtils.responseJsonFilter(response, list,${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
     }
 
     /**
      * 分页条件查询
      */
     @RequestMapping(value = "/findPage${operationTools.indexToUpperCase(tableName)}", method = RequestMethod.GET)
-    @ResponseBody
-    public Map findPage${operationTools.indexToUpperCase(tableName)}(String jsonStr, SelectEntity selectEntity) {
-        // 1. ======  查询数据
-        PageRequest pageRequest = JpaUtils.getPageRequest(selectEntity);
+    public void findPage${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response,String jsonStr,  SelectModel selectModel) {
+        PageRequest pageRequest = JpaUtils.getPageRequest(selectModel);
         Page<${operationTools.indexToUpperCase(tableName)}> page = ${operationTools.indexToLowerCase(tableName)}Service.findPage(jsonStr, pageRequest);
-        // 2. ======   整理数据返回==== 过滤字段====map输出
-        return WhyBeanUtils.filterPage(page, ${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
+        ResponseUtils.responseJsonFilter(response, page,${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
     }
 
     /**
      * 根据ID查询
      */
     @RequestMapping(value = "/findId${operationTools.indexToUpperCase(tableName)}", method = RequestMethod.GET)
-    @ResponseBody
-    public Map findId${operationTools.indexToUpperCase(tableName)}(@RequestParam(required = true) ${primarykeyJavaType} ${operationTools.indexToLowerCase(primarykey)}) {
-        // 1. ======  查询数据
-        ${operationTools.indexToUpperCase(tableName)} ${operationTools.indexToLowerCase(tableName)} = ${operationTools.indexToLowerCase(tableName)}Service.findId(${operationTools.indexToLowerCase(primarykey)});
-        // 2. ======   整理数据返回==== 过滤字段====map输出
-        return WhyBeanUtils.filterBean2Map(${operationTools.indexToLowerCase(tableName)}, ${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
+    public void findId${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response,@RequestParam ${primarykeyJavaType} ${operationTools.indexToLowerCase(primarykey)}) {
+        ${operationTools.indexToUpperCase(tableName)} obj = ${operationTools.indexToLowerCase(tableName)}Service.findId(${operationTools.indexToLowerCase(primarykey)});
+        ResponseUtils.responseJsonFilter(response, obj,${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
     }
 
     /**
      * 添加
      */
     @RequestMapping(value = "/add${operationTools.indexToUpperCase(tableName)}", method = RequestMethod.POST)
-    @ResponseBody
-    public Map add${operationTools.indexToUpperCase(tableName)}(${operationTools.indexToUpperCase(tableName)} ${operationTools.indexToLowerCase(tableName)}) {
-        Assert.notNull(${operationTools.indexToLowerCase(tableName)}, "请正确填写参数");
-        // 1. ======  过滤不能传过的参数
+    public void add${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response,@RequestParam ${operationTools.indexToUpperCase(tableName)} ${operationTools.indexToLowerCase(tableName)}) {
         WhyBeanUtils.filterField(${operationTools.indexToLowerCase(tableName)}, ${operationTools.indexToUpperCase(tableName)}Constants.filteraddColumnArr);
-        // 2. ======  添加
-        ${operationTools.indexToUpperCase(tableName)} ${operationTools.indexToLowerCase(tableName)}1 = ${operationTools.indexToLowerCase(tableName)}Service.add(${operationTools.indexToLowerCase(tableName)});
-        // 3. ======  过滤返回参数
-        return WhyBeanUtils.filterBean2Map(${operationTools.indexToLowerCase(tableName)}1, ${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
+        ${operationTools.indexToUpperCase(tableName)} obj = ${operationTools.indexToLowerCase(tableName)}Service.add(${operationTools.indexToLowerCase(tableName)});
+        ResponseUtils.responseJsonFilter(response, obj,${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
     }
 
 
@@ -144,32 +131,24 @@ public class ${operationTools.indexToUpperCase(tableName)}Controller {
      * 修改
      */
     @RequestMapping(value = "/update${operationTools.indexToUpperCase(tableName)}", method = RequestMethod.POST)
-    @ResponseBody
-    public Map update${operationTools.indexToUpperCase(tableName)}(final ${operationTools.indexToUpperCase(tableName)} ${operationTools.indexToLowerCase(tableName)}) {
-        // 1. ======  过滤不能传过的参数
+    public void update${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response,final ${operationTools.indexToUpperCase(tableName)} ${operationTools.indexToLowerCase(tableName)}) {
         WhyBeanUtils.filterField(${operationTools.indexToLowerCase(tableName)}, ${operationTools.indexToUpperCase(tableName)}Constants.filterupdateColumnArr);
-        // 2. ======  修改
-        ${operationTools.indexToLowerCase(tableName)}Service.update(${operationTools.indexToLowerCase(tableName)});
-        // 3. ======  过滤返回参数
-        return WhyBeanUtils.filterBean2Map(${operationTools.indexToLowerCase(tableName)}, ${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
+        ${operationTools.indexToUpperCase(tableName)} obj = ${operationTools.indexToLowerCase(tableName)}Service.update(${operationTools.indexToLowerCase(tableName)});
+        ResponseUtils.responseJsonFilter(response, obj,${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
     }
 
     /**
      * 删除
      */
     @RequestMapping(value = "/del${operationTools.indexToUpperCase(tableName)}")
-    @ResponseBody
-    public Map del${operationTools.indexToUpperCase(tableName)}(@RequestParam(required = true) ${primarykeyJavaType} ${operationTools.indexToLowerCase(primarykey)}Arr[]) {
-        // 1. ======  删除   ===  记录删除的数据
+    public Map del${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response, @RequestParam(required = true) ${primarykeyJavaType} ${operationTools.indexToLowerCase(primarykey)}Arr[]) {
         ${operationTools.indexToLowerCase(tableName)}Service.del(${operationTools.indexToLowerCase(primarykey)}Arr);
-        // 2. ====== 返回状态
         return BaseConstants.tableDelSuccess;
     }
 
 
 <#list javaColumns as column>
 <#if column.fktable>
-
     /**
      * 外键查询
      */
@@ -179,7 +158,6 @@ public class ${operationTools.indexToUpperCase(tableName)}Controller {
         List<${operationTools.indexToUpperCase(tableName)}> ${operationTools.indexToLowerCase(tableName)}List = ${operationTools.indexToLowerCase(tableName)}Service.fk${operationTools.indexToUpperCase(tableName)}Find${operationTools.indexToUpperCase(column.pkTableName)}(${operationTools.indexToLowerCase(column.pkTableColumn)});
         return ${operationTools.indexToLowerCase(tableName)}List;
     }
-
 </#if>
 </#list>
 }

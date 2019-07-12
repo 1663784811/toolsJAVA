@@ -1,6 +1,8 @@
 package cn.cyyaw.util.tools;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -32,5 +34,17 @@ public class WhyStringUtil {
         String str = UUID.randomUUID().toString();
         return str.replace("-", "");
     }
-
+    /**
+     * 生成订单号  2019 07 07 16 16 10
+     *
+     * @return
+     */
+    public static String createOrderNum() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String format = sdf.format(new Date());
+        for (int i = 0; i < 6; i++) {
+            format += getRandom(10);
+        }
+        return format;
+    }
 }
