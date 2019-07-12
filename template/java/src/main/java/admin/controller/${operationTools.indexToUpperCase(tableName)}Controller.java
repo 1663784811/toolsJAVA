@@ -116,24 +116,26 @@ public class ${operationTools.indexToUpperCase(tableName)}Controller {
         ResponseUtils.responseJsonFilter(response, obj,${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
     }
 
-    /**
-     * 添加
-     */
-    @RequestMapping(value = "/add${operationTools.indexToUpperCase(tableName)}", method = RequestMethod.POST)
-    public void add${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response,@RequestParam ${operationTools.indexToUpperCase(tableName)} ${operationTools.indexToLowerCase(tableName)}) {
-        WhyBeanUtils.filterField(${operationTools.indexToLowerCase(tableName)}, ${operationTools.indexToUpperCase(tableName)}Constants.filteraddColumnArr);
-        ${operationTools.indexToUpperCase(tableName)} obj = ${operationTools.indexToLowerCase(tableName)}Service.add(${operationTools.indexToLowerCase(tableName)});
-        ResponseUtils.responseJsonFilter(response, obj,${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
-    }
-
 
     /**
-     * 修改
+     * 添加或修改
      */
-    @RequestMapping(value = "/update${operationTools.indexToUpperCase(tableName)}", method = RequestMethod.POST)
-    public void update${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response,final ${operationTools.indexToUpperCase(tableName)} ${operationTools.indexToLowerCase(tableName)}) {
-        WhyBeanUtils.filterField(${operationTools.indexToLowerCase(tableName)}, ${operationTools.indexToUpperCase(tableName)}Constants.filterupdateColumnArr);
-        ${operationTools.indexToUpperCase(tableName)} obj = ${operationTools.indexToLowerCase(tableName)}Service.update(${operationTools.indexToLowerCase(tableName)});
+    @RequestMapping(value = "/save${operationTools.indexToUpperCase(tableName)}", method = RequestMethod.POST)
+    public void save${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response, @RequestParam ${operationTools.indexToUpperCase(tableName)} ${operationTools.indexToLowerCase(tableName)}) {
+        ${operationTools.indexToUpperCase(tableName)} obj = null;
+        //添加${primarykey}
+        ${primarykeyJavaType} id = ${operationTools.indexToLowerCase(tableName)}.get${operationTools.indexToUpperCase( primarykey )}();
+        if (null == id) {
+            //添加
+            WhyBeanUtils.filterField(${operationTools.indexToLowerCase(tableName)}, ${operationTools.indexToUpperCase(tableName)}Constants.filteraddColumnArr);
+            obj = ${operationTools.indexToLowerCase(tableName)}Service.save(${operationTools.indexToLowerCase(tableName)});
+        } else {
+            //修改
+            ${operationTools.indexToUpperCase(tableName)} ${operationTools.indexToLowerCase(tableName)}1 = ${operationTools.indexToLowerCase(tableName)}Service.findId(${operationTools.indexToLowerCase(primarykey)});
+            Assert.notNull(${operationTools.indexToLowerCase(tableName)}1, "操作失败！");
+            WhyBeanUtils.filterField(${operationTools.indexToLowerCase(tableName)}, ${operationTools.indexToUpperCase(tableName)}Constants.filteraddColumnArr);
+            obj = ${operationTools.indexToLowerCase(tableName)}Service.save(${operationTools.indexToLowerCase(tableName)});
+        }
         ResponseUtils.responseJsonFilter(response, obj,${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
     }
 
@@ -141,11 +143,10 @@ public class ${operationTools.indexToUpperCase(tableName)}Controller {
      * 删除
      */
     @RequestMapping(value = "/del${operationTools.indexToUpperCase(tableName)}")
-    public Map del${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response, @RequestParam(required = true) ${primarykeyJavaType} ${operationTools.indexToLowerCase(primarykey)}Arr[]) {
+    public Map del${operationTools.indexToUpperCase(tableName)}( @RequestParam ${primarykeyJavaType} ${operationTools.indexToLowerCase(primarykey)}Arr[]) {
         ${operationTools.indexToLowerCase(tableName)}Service.del(${operationTools.indexToLowerCase(primarykey)}Arr);
         return BaseConstants.tableDelSuccess;
     }
-
 
 <#list javaColumns as column>
 <#if column.fktable>
