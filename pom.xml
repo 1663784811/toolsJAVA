@@ -12,7 +12,7 @@
 
     <groupId>cn.cyyaw</groupId>
     <artifactId>buildcode</artifactId>
-    <version>1.1.0</version>
+    <version>0.0.1</version>
     <name>buildcode</name>
     <packaging>jar</packaging>
 

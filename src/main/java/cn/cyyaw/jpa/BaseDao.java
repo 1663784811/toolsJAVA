@@ -11,6 +11,8 @@ public interface BaseDao<E, ID> extends JpaRepository<E, ID>, JpaSpecificationEx
 
     /**
      * 根据ID查询
+     *
+     * @return
      */
     E findByid(ID id);
 
@@ -18,5 +20,9 @@ public interface BaseDao<E, ID> extends JpaRepository<E, ID>, JpaSpecificationEx
      * 根据id数组查询
      */
     List<E> findByidIsIn(ID[] id);
+
+    @Override
+    void deleteById(ID id);
+
 
 }
