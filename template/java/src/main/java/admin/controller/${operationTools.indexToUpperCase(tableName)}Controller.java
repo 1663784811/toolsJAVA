@@ -6,6 +6,7 @@ import ${basePackage}.admin.table.${operationTools.allToLowerCase(tableName)}.${
 
 import cn.cyyaw.jpa.BaseConstants;
 import cn.cyyaw.util.entity.SelectModel;
+import cn.cyyaw.util.tools.PageUtil;
 import cn.cyyaw.util.tools.JpaUtils;
 import cn.cyyaw.util.tools.ResponseUtils;
 import cn.cyyaw.util.tools.WhyBeanUtils;
@@ -104,7 +105,7 @@ public class ${operationTools.indexToUpperCase(tableName)}Controller {
     public void findPage${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response,String jsonStr,  SelectModel selectModel) {
         PageRequest pageRequest = JpaUtils.getPageRequest(selectModel);
         Page<${operationTools.indexToUpperCase(tableName)}> page = ${operationTools.indexToLowerCase(tableName)}Service.findPage(jsonStr, pageRequest);
-        ResponseUtils.responseJsonFilter(response, page,${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
+        ResponseUtils.responseJsonFilter(response, PageUtil.pageFormat(page),${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
     }
 
     /**
@@ -121,7 +122,8 @@ public class ${operationTools.indexToUpperCase(tableName)}Controller {
      * 添加或修改
      */
     @RequestMapping(value = "/save${operationTools.indexToUpperCase(tableName)}", method = RequestMethod.POST)
-    public void save${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response, @RequestParam ${operationTools.indexToUpperCase(tableName)} ${operationTools.indexToLowerCase(tableName)}) {
+    public void save${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response, ${operationTools.indexToUpperCase(tableName)} ${operationTools.indexToLowerCase(tableName)}) {
+        Assert.notNull(${operationTools.indexToLowerCase(tableName)}, "参数错误！");
         ${operationTools.indexToUpperCase(tableName)} obj = null;
         //添加${primarykey}
         ${primarykeyJavaType} id = ${operationTools.indexToLowerCase(tableName)}.get${operationTools.indexToUpperCase( primarykey )}();

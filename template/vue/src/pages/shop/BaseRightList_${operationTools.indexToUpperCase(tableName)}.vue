@@ -1,48 +1,56 @@
 <template>
     <div class="currencyTabBox">
-        <!--===========     基础操作     ==============-->
-        <BaseOperation
-                :searchWhere="searchWhere"
-                @clickAddBtn="clickAddBtn"
-                @clickUpdateBtn="clickUpdateBtn"
-                @clickDelBtn="clickDelBtn"
-                @clickSearchBtn="clickSearchBtn"
-                @changeSearchBtn="changeSearchBtn"
-        ></BaseOperation>
-        <!--===========    表格数据     ==============-->
-        <div class="tableBox scroll">
-            <Table size="small" ref="adminTable"
-                   :columns="TableHeader"
-                   :data="tableData"
-                   :loading="tableLoading"
-                   @on-selection-change="selectionChange"
-                   highlight-row
-            ></Table>
+        <div class="mainDataBox">
+            <!--===========     基础操作     ==============-->
+            <BaseOperation
+                    :searchWhere="searchWhere"
+                    @clickAddBtn="clickAddBtn"
+                    @clickUpdateBtn="clickUpdateBtn"
+                    @clickDelBtn="clickDelBtn"
+                    @clickSearchBtn="clickSearchBtn"
+                    @changeSearchBtn="changeSearchBtn"
+            ></BaseOperation>
+            <!--===========    表格数据     ==============-->
+            <div class="tableBox scroll">
+                <Table size="small" ref="pageTable"
+                       :columns="TableHeader"
+                       :data="tableData"
+                       :loading="tableLoading"
+                       @on-selection-change="selectionChange"
+                       @on-current-change="selectionChangeOne"
+                       highlight-row
+                ></Table>
+            </div>
+            <!--===========    分页     ==============-->
+            <div class="pageBox">
+                <Page show-total
+                      show-elevator
+                      show-sizer
+                      :total="total"
+                      :page-size="requestTableData.size"
+                      @on-change="clickChangePage"
+                      @on-page-size-change="clickChangeSize"
+                />
+            </div>
         </div>
-        <!--===========    分页     ==============-->
-        <div class="pageBox">
-            <Page show-total
-                  show-elevator
-                  show-sizer
-                  :total="total"
-                  :page-size="requestTableData.size"
-                  @on-change="clickChangePage"
-                  @on-page-size-change="clickChangeSize"
-            />
+        <div class="rightDataBox">
+            <BasePanel title="角色">
+                <BaseList @clickDelBtn="baseListDelClickBtn" ref="rightBaseList"></BaseList>
+            </BasePanel>
         </div>
         <!--===========    操作弹出层     ==============-->
         <!--====  添加  ====-->
         <BaseWindow ref="refAddBaseWindow"
                     :title="addTitle"
-                    :fieldData="addFieldDataT"
-                    @submitForm="addSubmitForm"
-        ></BaseWindow>
+                    :fieldData="addFieldData"
+                    @submitForm="addSubmitForm">
+        </BaseWindow>
         <!--====  修改  ====-->
         <BaseWindow ref="refUpdateBaseWindow"
                     :title="updateTitle"
-                    :fieldData="updateFieldDataT"
-                    @submitForm="updateSubmitForm"
-        ></BaseWindow>
+                    :fieldData="updateFieldData"
+                    @submitForm="updateSubmitForm">
+        </BaseWindow>
         <!--======   删除提示   ======-->
         <Modal v-model="isDelInfo" width="360">
             <p slot="header" style="color:#f60;text-align:center">
@@ -53,7 +61,7 @@
                 <p>是否要刪除?</p>
             </div>
             <div slot="footer">
-                <Button type="error" size="large" long :loading="isDelLoading" @click="delData">刪除</Button>
+                <Button type="error" size="large" long :loading="isDelLoading" @click="delData" >刪除</Button>
             </div>
         </Modal>
 
@@ -61,16 +69,19 @@
 </template>
 
 <script>
-    import '@/assets/admin/css/adminPage.css';
-    import global from '../../common/global.js';
     import BaseOperation from '../../components/admin/BaseOperation';
     import BaseWindow from '../../components/admin/BaseWindow';
+    import BasePanel from '../../components/admin/BasePanel';
+    import BaseList from '../../components/admin/BaseList';
+
 
     export default {
-        name: "${operationTools.indexToUpperCase(tableName)}BasePage",
+        name: "${operationTools.indexToUpperCase(tableName)}BaseRightList",
         components: {
             BaseOperation,
-            BaseWindow
+            BaseWindow,
+            BasePanel,
+            BaseList
         },
         data() {
             return {
@@ -92,21 +103,20 @@
 
                 //==========操作 START
                 addFieldData: [],//添加字段数据
-                addFieldDataT: [],//添加字段数据
                 addTitle: "新增",
+
                 updateFieldData: [],//修改字段数据
-                updateFieldDataT: [],//修改字段数据
                 updateTitle: "修改",
                 //========== 操作 END
                 searchWhere: [],
                 //==========  删除
-                isDelInfo: false,
-                isDelLoading: false
+                isDelInfo:false,
+                isDelLoading:false
             }
         },
         created() {
-            //字段数据
-            global.ajaxGet("/${tableName}_field.json", {}).then(responseData => {
+            //====   表头
+            this.ajaxGet("${tableName}_field.json", {}).then(responseData => {
                 this.addTitle = responseData.title;
                 this.addFieldData = responseData.fieldList;
                 this.updateTitle = responseData.title;
@@ -131,40 +141,44 @@
             selectionChange: function (data) {
                 this.selectData = data;
             },
+            //单选
+            selectionChangeOne: function (currentRow) {
+            },
             //=================================================== 操作  START
             //点击添加
             clickAddBtn: function () {
-                this.addFieldDataT = this.addFieldData;
                 this.$refs.refAddBaseWindow.operationWindow(true);
             },
             //点击修改
             clickUpdateBtn: function () {
-                this.updateFieldDataT = this.updateFieldData;
                 let that = this;
                 let selectData = this.selectData;
                 if (selectData.length == 1) {
                     this.findIdFn({id: selectData[0].id}, function () {
-
                         that.$refs.refUpdateBaseWindow.operationWindow(true);
                     })
                 } else if (selectData.length > 1) {
-                    this.$Message.warning("请选择一条数据");
+                    this.$Message.info("请选择一条数据");
                 } else {
-                    this.$Message.warning("请选择数据");
+                    this.$Message.info("请选择数据");
                 }
             },
             //点击删除
             clickDelBtn: function () {
                 let selectData = this.selectData;
                 if (selectData.length > 0) {
-                    this.isDelInfo = true;
+                    this.isDelInfo=true;
                 } else {
-                    this.$Message.warning("请选择数据");
+                    this.$Message.info("请选择数据");
                 }
             },
+            //点击搜索
+            clickSearchBtn: function () {
+                this.requestTableDataFn();
+            },
             //执行删除
-            delData: function () {
-                this.isDelLoading = true;
+            delData:function(){
+                this.isDelLoading=true;
                 let selectData = this.selectData;
                 let idArr = [];
                 for (let i = 0; i < selectData.length; i++) {
@@ -178,7 +192,7 @@
             },
             //改变搜索条件
             changeSearchBtn: function (obj) {
-                if (obj.selectValue && obj.selectValue !== "") {
+                if (obj.selectValue && obj.selectValue != "") {
                     this.requestTableData.jsonStr = '{' + obj.selectValue + ':"' + obj.searchData + '"}';
                 } else {
                     this.requestTableData.jsonStr = "";
@@ -204,84 +218,90 @@
                 this.requestTableData.size = size;
                 this.requestTableDataFn();
             },
+            //=========================================================================================================================  右边组件
+            baseListDelClickBtn: function (data) {
+                getRightBaseList();
+            },
+            //=========================================================================================================================  右边组件
             //======================================================================   请求数据
             //表格数据
             requestTableDataFn: function (successCallBack, errorCallBack) {
                 this.tableData = [];
                 this.selectData = [];
                 this.tableLoading = true;
-                global.ajaxGet("/admin/findPage${operationTools.indexToUpperCase(tableName)}", this.requestTableData, 1).then(responseData => {
-                    if (responseData.data) {
+                this.ajaxGet("findPage${operationTools.indexToUpperCase(tableName)}", this.requestTableData, 1).then(responseData => {
                     this.tableData = responseData.data;
-                    this.total = responseData.total;
-                    successCallBack ? successCallBack() : "";
-                } else {
-                    this.$Message.error("查询数据失败:" + responseData.message);
-                }
+                this.total = responseData.total;
+                successCallBack ? successCallBack() : "";
                 this.tableLoading = false;
             }, errorData => {
-                    this.$Message.error("查询数据失败" + errorData);
+                    this.$Message.error("查询数据失败"+errorData);
                     this.tableLoading = false;
                     errorCallBack ? errorCallBack(errorData) : "";
                 });
             },
             //新增数据请求
-            addSubmitDataFn: function () {
-                this.$refs.refAddBaseWindow.setLoading(true);
-                global.ajaxPost("/admin/add${operationTools.indexToUpperCase(tableName)}", this.submitData, 1).then(() => {
+            addSubmitDataFn: function (successCallBack, errorCallBack) {
+                this.ajaxPost("add${operationTools.indexToUpperCase(tableName)}", this.submitData, 1).then(() => {
                     this.$refs.refAddBaseWindow.operationWindow(false);
                 this.$refs.refAddBaseWindow.setfromData({});
-                this.$refs.refAddBaseWindow.setLoading(false);
                 this.$Message.success("添加成功");
-                this.addFieldDataT = [];
                 this.requestTableDataFn();
+                successCallBack ? successCallBack() : "";
             }, errorData => {
-                    this.$Message.error("添加失败" + errorData);
-                    this.$refs.refAddBaseWindow.setLoading(false);
+                    this.$Message.error("添加失败"+errorData);
+                    errorCallBack ? errorCallBack(errorData) : "";
                 });
             },
             //修改数据请求
             updateSubmitDataFn: function (successCallBack, errorCallBack) {
-                this.$refs.refUpdateBaseWindow.setLoading(true);
-                global.ajaxPost("/admin/update${operationTools.indexToUpperCase(tableName)}", this.submitData, 1).then(() => {
+                this.ajaxPost("update${operationTools.indexToUpperCase(tableName)}", this.submitData, 1).then(() => {
                     this.$refs.refUpdateBaseWindow.operationWindow(false);
                 this.$refs.refUpdateBaseWindow.setfromData({});
-                this.$refs.refUpdateBaseWindow.setLoading(false);
                 this.$Message.success("修改成功");
-                this.updateFieldDataT = [];
                 this.requestTableDataFn();
                 successCallBack ? successCallBack() : "";
             }, errorData => {
-                    this.$refs.refUpdateBaseWindow.setLoading(false);
                     this.$Message.error("修改失败");
                     errorCallBack ? errorCallBack(errorData) : "";
                 });
             },
             //根ID查找数据
             findIdFn: function (sendObj, successCallBack, errorCallBack) {
-                global.ajaxGet("/admin/findId${operationTools.indexToUpperCase(tableName)}", sendObj, 1).then(responseData => {
+                this.ajaxGet("findId${operationTools.indexToUpperCase(tableName)}", sendObj, 1).then(responseData => {
                     this.$refs.refUpdateBaseWindow.setfromData(responseData);
                 successCallBack ? successCallBack(responseData) : "";
             }, errorData => {
-                    this.$Message.error("查询数据失败" + errorData);
+                    this.$Message.error("查询数据失败"+errorData);
                     errorCallBack ? errorCallBack(errorData) : "";
                 });
             },
             //根ID删除数据
             delIdFn: function (sendObj, successCallBack, errorCallBack) {
-                global.ajaxGet("/admin/del${operationTools.indexToUpperCase(tableName)}", sendObj, 1).then(responseData => {
+                this.ajaxGet("del${operationTools.indexToUpperCase(tableName)}", sendObj, 1).then(responseData => {
                     this.$Message.success(responseData.message);
-                this.isDelInfo = false;
-                this.isDelLoading = false;
+                this.isDelInfo=false;
+                this.isDelLoading=false;
                 this.requestTableDataFn();
                 successCallBack ? successCallBack(responseData) : "";
             }, errorData => {
-                    this.isDelLoading = false;
-                    this.$Message.error("刪除失败" + errorData);
+                    this.isDelLoading=false;
+                    this.$Message.error("刪除失败"+errorData);
+                    errorCallBack ? errorCallBack(errorData) : "";
+                });
+            },
+            //获取右边数据
+            getRightBaseList: function (sendObj, successCallBack, errorCallBack) {
+                this.$refs.rightBaseList.setListData([]);
+                this.ajaxGet("findAllTRole", sendObj, 1).then(responseData => {
+                    this.$refs.rightBaseList.setListData(responseData);
+                    successCallBack ? successCallBack(responseData) : "";
+                }, errorData => {
                     errorCallBack ? errorCallBack(errorData) : "";
                 });
             }
         }
+
 
     }
 </script>
@@ -289,20 +309,35 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
     .currencyTabBox
         padding 0px;
-        height 100%;
+        height 100%
         overflow hidden;
+        position: relative;
 
-        .tableBox
-            padding: 0 10px 10px 10px;
-            height calc(100% - 96px);
-            overflow auto;
+        .mainDataBox
+            height: 100%;
+            margin-right 200px;
 
-        .pageBox
-            width: 100%;
-            min-height: 50px;
-            text-align right;
-            padding: 10px;
-            border-top: 1px solid #eee;
+            .tableBox
+                padding: 0 10px 10px 10px
+                height calc(100% - 96px)
+                overflow auto
+
+            .pageBox
+                width: 100%;
+                min-height: 50px;
+                text-align right;
+                padding: 10px;
+                border-top: 1px solid #eee;
+                background: #fff;
+                z-index: 10
+
+        .rightDataBox
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            overflow: hidden;
             background: #fff;
-            z-index: 10;
+            width: 200px;
+            border-left: 1px solid #eee;
 </style>

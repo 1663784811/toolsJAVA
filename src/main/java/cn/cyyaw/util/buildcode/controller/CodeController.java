@@ -31,11 +31,14 @@ public class CodeController {
                     Map<String, Object> map = new HashMap();
                     //===========================================
                     map.put("basePackage", "cn.cyyaw.shop");
-                    map.put("tableName", javaData.getTable());
-                    map.put("tableNote", javaData.getTableNote());
-                    map.put("primarykey", javaData.getPrimarykey());
-                    map.put("primarykeyJavaType", javaData.getPrimarykeyJavaType());
-                    map.put("javaColumns", javaData.getJavaColumns());
+                    map.put("basePathVue", "/shop");
+
+                    //===========================================
+                    map.put("tableName", javaData.getTable());    //数据表
+                    map.put("tableNote", javaData.getTableNote());  //表注释
+                    map.put("primarykey", javaData.getPrimarykey());  // 主键
+                    map.put("primarykeyJavaType", javaData.getPrimarykeyJavaType());  //主键类型
+                    map.put("javaColumns", javaData.getJavaColumns());    //
                     map.put("vueJsons", TypeTools.javaColumnList2VueJsonList(javaData.getJavaColumns()));
                     //===========================================
                     map.put("operationTools", operationTools);//工具类

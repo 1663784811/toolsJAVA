@@ -21,17 +21,13 @@
             </Table>
         </div>
         <!--===========    操作弹出层     ==============-->
-        <!--====  添加  ====-->
-        <BaseWindow ref="refAddBaseWindow"
-                    :title="addTitle"
-                    :fieldData="addFieldDataT"
-                    @submitForm="addSubmitForm"
-        ></BaseWindow>
-        <!--====  修改  ====-->
-        <BaseWindow ref="refUpdateBaseWindow"
-                    :title="updateTitle"
-                    :fieldData="updateFieldDataT"
-                    @submitForm="updateSubmitForm"
+        <BaseWindow ref="winRef"
+                    :show.sync="winShow"
+                    :title="winTitle"
+                    :fieldData="winFieldData"
+                    :valueData="winValueData"
+                    :saveLoadding="winLoadding"
+                    @submitForm="submitForm"
         ></BaseWindow>
         <!--======   删除提示   ======-->
         <Modal v-model="isDelInfo" width="360">
@@ -52,7 +48,7 @@
 <script>
     import '@/assets/admin/css/adminPage.css';
     import BaseOperation from '@/components/admin/BaseOperation';
-    import BaseWindow from '@/components/admin/BaseWindow';
+    import BaseWindow from '@/components/BaseWindow';
     import {
         TitleJson,
         addFieldDataJson,
@@ -60,28 +56,33 @@
         TableHeaderJson,
         searchWhereJson
     } from "@${basePathVue}/config/jsonObj/${operationTools.indexToLowerCase(tableName)}";
+
     import {
-        API_findAll${operationTools.indexToUpperCase(tableName)},
-        API_save${operationTools.indexToUpperCase(tableName)},
-        API_findId${operationTools.indexToUpperCase(tableName)},
-        API_del${operationTools.indexToUpperCase(tableName)}
+        API_findPage${operationTools.indexToUpperCase(tableName)},
+        API_del${operationTools.indexToUpperCase(tableName)},
+        API_save${operationTools.indexToUpperCase(tableName)}
     } from "@${basePathVue}/config/api/${operationTools.indexToLowerCase(tableName)}";
+
+
     export default {
-        name: "${operationTools.indexToUpperCase(tableName)}",
+        name: "BasePage_${operationTools.indexToUpperCase(tableName)}",
         components: {
             BaseOperation,
             BaseWindow
         },
         data() {
             return {
+                winTitle: " ",
+                winShow: false,
+                winFieldData: [],
+                winValueData: {},
+                winLoadding: false,
                 //======================  基础数据
                 addTitle: TitleJson,
                 addFieldData: addFieldDataJson,
-                addFieldDataT: [],//添加字段数据
 
                 updateTitle: TitleJson,
                 updateFieldData: updateFieldDataJson,
-                updateFieldDataT: [],//修改字段数据
 
                 TableHeader: TableHeaderJson,
                 searchWhere: searchWhereJson,
@@ -103,8 +104,7 @@
                 isDelLoading: false
             }
         },
-        created() {
-            //====  数据
+        mounted() {
             this.requestTableDataFn();
         },
         methods: {
@@ -112,21 +112,21 @@
             selectionChange: function (data) {
                 this.selectData = data;
             },
-            //=================================================== 操作  START
             //点击添加
             clickAddBtn: function () {
-                this.addFieldDataT = this.addFieldData;
-                this.$refs.refAddBaseWindow.operationWindow(true);
+                this.winShow = true;
+                this.winTitle = this.addTitle;
+                this.winFieldData = this.addFieldData;
+                this.winValueData = {};
             },
             //点击修改
             clickUpdateBtn: function () {
-                this.updateFieldDataT = this.updateFieldData;
-                let that = this;
                 let selectData = this.selectData;
                 if (selectData.length === 1) {
-                    this.findIdFn({id: selectData[0].id}, function () {
-                        that.$refs.refUpdateBaseWindow.operationWindow(true);
-                    })
+                    this.winShow = true;
+                    this.winValueData = selectData[0];
+                    this.winTitle = this.updateTitle;
+                    this.winFieldData = this.updateFieldData;
                 } else if (selectData.length > 1) {
                     this.$Message.warning("请选择一条数据");
                 } else {
@@ -166,14 +166,9 @@
             },
             //=================================================== 操作  END
             //=== 添加提交表单数据
-            addSubmitForm: function (formData) {
+            submitForm: function (formData) {
                 this.submitData = formData;
-                this.addSubmitDataFn();
-            },
-            //=== 修改提交表单数据
-            updateSubmitForm: function (formData) {
-                this.submitData = formData;
-                this.updateSubmitDataFn();
+                this.submitDataFn();
             },
             //===== 分页
             clickChangePage: function (page) {
@@ -186,86 +181,43 @@
                 this.tableData = [];
                 this.selectData = [];
                 this.tableLoading = true;
-                API_findAll${operationTools.indexToUpperCase(tableName)}(this.requestTableData).then(responseData => {
-                    let treeData = [];
-                    console.log(responseData)
-                    for (let i = 0; i < responseData.length; i++) {
-                        let json = {
-                            id: responseData[i].tid,
-                            pid: responseData[i].pid,
-                            name: responseData[i].name,
-                            icon: responseData[i].iconType,
-                            isOpenTree: responseData[i].isOpenTree === undefined ? (responseData[i].isOpenTree = true) : responseData[i].isOpenTree,
-                            isActive: responseData[i].isActive === undefined ? (responseData[i].isActive = false) : responseData[i].isActive,
-                            data: responseData[i]
-                        };
-                        treeData.push(json)
-                    }
-                    this.tableData = TREE2ARRAY(CREATETREESTRUCTURE(treeData));
+                API_findPage${operationTools.indexToUpperCase(tableName)}(this.requestTableData).then(res => {
+                    this.requestTableData.page = res.page;
+                    this.requestTableData.size = res.size;
+                    this.requestTableData.total = res.total;
+                    this.tableData = res.data;
                     this.tableLoading = false;
                 }, errorData => {
                     this.$Message.error("查询数据失败" + errorData);
                     this.tableLoading = false;
                 });
             },
-            //新增数据请求
-            addSubmitDataFn: function () {
-                this.$refs.refAddBaseWindow.setLoading(true);
-                API_add${operationTools.indexToUpperCase(tableName)}(this.submitData).then(() => {
-                    this.$refs.refAddBaseWindow.operationWindow(false);
-                    this.$refs.refAddBaseWindow.setfromData({});
-                    this.$refs.refAddBaseWindow.setLoading(false);
-                    this.$Message.success("添加成功");
+            submitDataFn: function () {
+                this.winLoadding = true;
+                API_save${operationTools.indexToUpperCase(tableName)}(this.submitData).then(() => {
+                    this.winShow = false;
+                    this.winLoadding = false;
+                    this.$Message.success("保存成功");
                     this.addFieldDataT = [];
                     this.requestTableDataFn();
                 }, errorData => {
-                    this.$Message.error("添加失败" + errorData);
-                    this.$refs.refAddBaseWindow.setLoading(false);
-                });
-            },
-            //修改数据请求
-            updateSubmitDataFn: function (successCallBack, errorCallBack) {
-                this.$refs.refUpdateBaseWindow.setLoading(true);
-                API_update${operationTools.indexToUpperCase(tableName)}(this.submitData).then(() => {
-                    this.$refs.refUpdateBaseWindow.operationWindow(false);
-                    this.$refs.refUpdateBaseWindow.setfromData({});
-                    this.$refs.refUpdateBaseWindow.setLoading(false);
-                    this.$Message.success("修改成功");
-                    this.updateFieldDataT = [];
-                    this.requestTableDataFn();
-                    successCallBack ? successCallBack() : "";
-                }, errorData => {
-                    this.$refs.refUpdateBaseWindow.setLoading(false);
-                    this.$Message.error("修改失败");
-                    errorCallBack ? errorCallBack(errorData) : "";
-                });
-            },
-            //根ID查找数据
-            findIdFn: function (sendObj, successCallBack, errorCallBack) {
-                API_findId${operationTools.indexToUpperCase(tableName)}(sendObj).then(responseData => {
-                    this.$refs.refUpdateBaseWindow.setfromData(responseData);
-                    successCallBack ? successCallBack(responseData) : "";
-                }, errorData => {
-                    this.$Message.error("查询数据失败" + errorData);
-                    errorCallBack ? errorCallBack(errorData) : "";
+                    this.$Message.error("保存失败" + errorData);
+                    this.winLoadding = false;
                 });
             },
             //根ID删除数据
-            delIdFn: function (sendObj, successCallBack, errorCallBack) {
+            delIdFn: function (sendObj) {
                 API_del${operationTools.indexToUpperCase(tableName)}(sendObj).then(responseData => {
                     this.$Message.success(responseData.message);
                     this.isDelInfo = false;
                     this.isDelLoading = false;
                     this.requestTableDataFn();
-                    successCallBack ? successCallBack(responseData) : "";
                 }, errorData => {
                     this.isDelLoading = false;
-                    this.$Message.error("刪除失败" + errorData);
-                    errorCallBack ? errorCallBack(errorData) : "";
+                    this.$Message.error("刪除失败," + errorData);
                 });
             }
         }
-
     }
 </script>
 
