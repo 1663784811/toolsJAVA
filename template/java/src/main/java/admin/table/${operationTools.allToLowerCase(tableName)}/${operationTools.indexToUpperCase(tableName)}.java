@@ -5,6 +5,7 @@ package ${basePackage}.admin.table.${operationTools.allToLowerCase(tableName)};
 import ${basePackage}.admin.table.${operationTools.allToLowerCase(column.pkTableName)}.${operationTools.indexToUpperCase(column.pkTableName)};
     </#if>
 </#list>
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 import java.io.Serializable;
 import javax.persistence.*;
@@ -32,6 +33,9 @@ public class ${operationTools.indexToUpperCase(tableName)} implements Serializab
     <#else>
     @Basic
     ${interfaceToos.column(column)}
+    <#if column.javaType == 'Date' >
+    @JSONField(format="yyyy-MM-dd hh:mm:ss")
+    </#if>
     private ${column.javaType} ${operationTools.indexToLowerCase(column.name)};
     </#if>
 </#list>

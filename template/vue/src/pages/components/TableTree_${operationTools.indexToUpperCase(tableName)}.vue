@@ -1,3 +1,4 @@
+<!--=========================      表格树      =========================-->
 <template>
     <div class="currencyTabBox">
         <!--===========     基础操作     ==============-->
@@ -18,6 +19,9 @@
                    @on-selection-change="selectionChange"
                    highlight-row
             >
+                <template slot-scope="{row}" slot="name">
+                    <span :style="{paddingLeft: row.index*16+'px'}">{{ row.name }}</span>
+                </template>
             </Table>
         </div>
         <!--===========    分页     ==============-->
@@ -73,10 +77,13 @@
         API_del${operationTools.indexToUpperCase(tableName)},
         API_save${operationTools.indexToUpperCase(tableName)}
     } from "@${basePathVue}/config/api/${operationTools.indexToLowerCase(tableName)}";
-
+    import {
+        CREATETREESTRUCTURE,
+        TREE2ARRAY
+    } from '@/assets/common/js/global';
 
     export default {
-        name: "BasePage_${operationTools.indexToUpperCase(tableName)}",
+        name: "TableTree_${operationTools.indexToUpperCase(tableName)}",
         components: {
             BaseOperation,
             BaseWindow
@@ -100,7 +107,7 @@
 
                 requestTableData: {//请求表格数据参数
                     page: 1,
-                    size: 30,
+                    size: 40,
                     total:0,
                     sort: "${operationTools.allToLowerCase(primarykey)}_desc"
                 },
@@ -201,7 +208,21 @@
                     this.requestTableData.page = res.page;
                     this.requestTableData.size = res.size;
                     this.requestTableData.total = res.total;
-                    this.tableData = res.data;
+                    let treeData = [];
+                    let data = res.data;
+                    for (let i = 0; i < data.length; i++) {
+                        let json = {
+                            id: data[i].tid,
+                            pid: data[i].pid,
+                            name: data[i].name,
+                            icon: data[i].iconType,
+                            isOpenTree: data[i].isOpenTree === undefined ? (data[i].isOpenTree = true) : data[i].isOpenTree,
+                            isActive: data[i].isActive === undefined ? (data[i].isActive = false) : data[i].isActive,
+                            data: data[i]
+                        };
+                        treeData.push(json)
+                    }
+                    this.tableData = TREE2ARRAY(CREATETREESTRUCTURE(treeData));
                     this.tableLoading = false;
                 }, errorData => {
                     this.$Message.error("查询数据失败" + errorData);
