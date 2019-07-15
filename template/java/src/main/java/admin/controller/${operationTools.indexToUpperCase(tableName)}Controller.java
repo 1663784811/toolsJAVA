@@ -6,10 +6,7 @@ import ${basePackage}.admin.table.${operationTools.allToLowerCase(tableName)}.${
 
 import cn.cyyaw.jpa.BaseConstants;
 import cn.cyyaw.util.entity.SelectModel;
-import cn.cyyaw.util.tools.PageUtil;
-import cn.cyyaw.util.tools.JpaUtils;
-import cn.cyyaw.util.tools.ResponseUtils;
-import cn.cyyaw.util.tools.WhyBeanUtils;
+import cn.cyyaw.util.tools.*;
 
 <#list javaColumns as column>
     <#if column.fktable>
@@ -27,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 
 /**
  * <pre>
@@ -130,6 +128,14 @@ public class ${operationTools.indexToUpperCase(tableName)}Controller {
         if (null == id) {
             //添加
             WhyBeanUtils.filterField(${operationTools.indexToLowerCase(tableName)}, ${operationTools.indexToUpperCase(tableName)}Constants.filteraddColumnArr);
+<#list javaColumns as column>
+        <#if column.name == 'tid' >
+            ${operationTools.indexToLowerCase(tableName)}.setTid(WhyStringUtil.getUUID());
+        </#if>
+        <#if column.name == 'createtime' >
+            ${operationTools.indexToLowerCase(tableName)}.setCreatetime(new Date());
+        </#if>
+</#list>
             obj = ${operationTools.indexToLowerCase(tableName)}Service.save(${operationTools.indexToLowerCase(tableName)});
         } else {
             //修改

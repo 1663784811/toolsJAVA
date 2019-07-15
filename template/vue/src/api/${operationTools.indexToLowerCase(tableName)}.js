@@ -27,3 +27,12 @@ export const API_save${operationTools.indexToUpperCase(tableName)} = (parameter)
  */
 export const API_del${operationTools.indexToUpperCase(tableName)} = (parameter) => AJAXPOST(baseurl + "/admin/del${operationTools.indexToUpperCase(tableName)}", parameter);
 
+
+<#list javaColumns as column>
+    <#if column.fktable>
+/**
+ * 外键
+ */
+export const API_fk${operationTools.indexToUpperCase(tableName)}Find${operationTools.indexToUpperCase(column.pkTableName)} = (parameter) => AJAXPOST(baseurl + "/admin/fk${operationTools.indexToUpperCase(tableName)}Find${operationTools.indexToUpperCase(column.pkTableName)}", parameter);
+    </#if>
+</#list>

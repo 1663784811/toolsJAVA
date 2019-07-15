@@ -1,6 +1,6 @@
 package ${basePackage}.admin.table.${operationTools.allToLowerCase(tableName)};
 
-import ${basePackage}.system.jpa.BaseDao;
+import cn.cyyaw.jpa.BaseDao;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;

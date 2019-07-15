@@ -1,7 +1,7 @@
 package ${basePackage}.admin.service;
 
 import ${basePackage}.admin.table.${operationTools.allToLowerCase(tableName)}.${operationTools.indexToUpperCase(tableName)};
-import ${basePackage}.system.service.BaseTableService;
+import cn.cyyaw.jpa.BaseTableService;
 
 import java.util.List;
 

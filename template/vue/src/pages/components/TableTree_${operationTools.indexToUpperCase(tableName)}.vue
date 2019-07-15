@@ -109,7 +109,7 @@
                     page: 1,
                     size: 40,
                     total:0,
-                    sort: "${operationTools.allToLowerCase(primarykey)}_desc"
+                    sort: "${operationTools.allToLowerCase(primarykey)}_asc"
                 },
                 submitData: {},//添加修改提交数据,
                 //=====================================================     响应数据
@@ -184,7 +184,7 @@
                 }
             },
             //=================================================== 操作  END
-            //=== 添加提交表单数据
+            //=== 添加修改提交表单数据
             submitForm: function (formData) {
                 this.submitData = formData;
                 this.submitDataFn();
