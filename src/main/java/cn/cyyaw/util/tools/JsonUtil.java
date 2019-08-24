@@ -1,6 +1,7 @@
 package cn.cyyaw.util.tools;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
 
 import java.util.Set;
@@ -17,9 +18,9 @@ public class JsonUtil extends JSON {
                 for (String fstr : filter) {
                     excludes.add(fstr);
                 }
-                return toJSONString(object, f);
+                return toJSONString(object, f,SerializerFeature.WriteMapNullValue);
             } else {
-                return toJSONString(object);
+                return toJSONString(object, SerializerFeature.WriteMapNullValue);
             }
         }
         return null;
@@ -36,9 +37,9 @@ public class JsonUtil extends JSON {
                 for (String fstr : filter) {
                     includes.add(fstr);
                 }
-                return toJSONString(object, f);
+                return toJSONString(object, f,SerializerFeature.WriteMapNullValue);
             } else {
-                return toJSONString(object);
+                return toJSONString(object,SerializerFeature.WriteMapNullValue);
             }
         }
         return null;

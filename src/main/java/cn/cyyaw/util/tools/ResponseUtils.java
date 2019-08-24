@@ -1,5 +1,6 @@
 package cn.cyyaw.util.tools;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.extern.log4j.Log4j;
 
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +43,7 @@ public final class ResponseUtils {
      */
     public static void responseJson(final HttpServletResponse response, Object bean) {
         response.setContentType("application/json; charset=utf-8");
-        responseDate(response, JsonUtil.toJSONString(bean));
+        responseDate(response, JsonUtil.toJSONString(bean, SerializerFeature.WriteMapNullValue));
     }
 
     /**

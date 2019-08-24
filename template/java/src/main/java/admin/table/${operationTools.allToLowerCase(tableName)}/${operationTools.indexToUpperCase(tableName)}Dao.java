@@ -12,7 +12,7 @@ public interface ${operationTools.indexToUpperCase(tableName)}Dao extends BaseDa
     /**
      * 外键查询
      */
-    @Query("select model from ${operationTools.indexToUpperCase(tableName)} model where model.${operationTools.indexToUpperCase(column.pkTableName)} in (select m.${operationTools.indexToLowerCase(column.pkTableColumn)} from ${operationTools.indexToUpperCase(column.pkTableName)} m where m.${operationTools.indexToLowerCase(column.pkTableColumn)} = ?1 )")
+    @Query("select model from ${operationTools.indexToUpperCase(tableName)} model where model.${operationTools.indexToLowerCase(column.pkTableName)} in (select m.${operationTools.indexToLowerCase(column.pkTableColumn)} from ${operationTools.indexToUpperCase(column.pkTableName)} m where m.${operationTools.indexToLowerCase(column.pkTableColumn)} = ?1 )")
     List<${operationTools.indexToUpperCase(tableName)}> fk${operationTools.indexToUpperCase(tableName)}Find${operationTools.indexToUpperCase(column.pkTableName)}(${column.javaType} ${operationTools.indexToLowerCase(column.pkTableColumn)});
 </#if>
 </#list>
