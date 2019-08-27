@@ -119,9 +119,8 @@ public class ${operationTools.indexToUpperCase(tableName)}Controller {
     /**
      * 添加或修改
      */
-    @RequestMapping(value = "/save${operationTools.indexToUpperCase(tableName)}", method = RequestMethod.POST)
-    public void save${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response, ${operationTools.indexToUpperCase(tableName)} ${operationTools.indexToLowerCase(tableName)}) {
-        Assert.notNull(${operationTools.indexToLowerCase(tableName)}, "参数错误！");
+    @PostMapping(value = "/save${operationTools.indexToUpperCase(tableName)}")
+    public void save${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response,@RequestBody ${operationTools.indexToUpperCase(tableName)} ${operationTools.indexToLowerCase(tableName)}) {
         ${operationTools.indexToUpperCase(tableName)} obj = null;
         //添加${primarykey}
         ${primarykeyJavaType} id = ${operationTools.indexToLowerCase(tableName)}.get${operationTools.indexToUpperCase( primarykey )}();
