@@ -1,9 +1,12 @@
 package ${basePackage}.admin.service;
 
-import ${basePackage}.admin.table.${operationTools.allToLowerCase(tableName)}.${operationTools.indexToUpperCase(tableName)};
+import ${basePackage}.admin.table.entity.${operationTools.indexToUpperCase(tableName)};
 import cn.cyyaw.jpa.BaseTableService;
-
-import java.util.List;
+<#list javaColumns as column>
+<#if column.fktable>
+import java.util.List;<#break>
+</#if>
+</#list>
 
 public interface ${operationTools.indexToUpperCase(tableName)}Service extends BaseTableService<${operationTools.indexToUpperCase(tableName)}, ${primarykeyJavaType}> {
 

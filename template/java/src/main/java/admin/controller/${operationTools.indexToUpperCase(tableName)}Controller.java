@@ -1,8 +1,8 @@
 package ${basePackage}.admin.controller;
 
 import ${basePackage}.admin.service.${operationTools.indexToUpperCase(tableName)}Service;
-import ${basePackage}.admin.table.${operationTools.allToLowerCase(tableName)}.${operationTools.indexToUpperCase(tableName)};
-import ${basePackage}.admin.table.${operationTools.allToLowerCase(tableName)}.${operationTools.indexToUpperCase(tableName)}Constants;
+import ${basePackage}.admin.table.entity.${operationTools.indexToUpperCase(tableName)};
+import ${basePackage}.admin.table.entityconst.${operationTools.indexToUpperCase(tableName)}Const;
 
 import cn.cyyaw.jpa.BaseConstants;
 import cn.cyyaw.util.entity.SelectModel;
@@ -10,8 +10,8 @@ import cn.cyyaw.util.tools.*;
 
 <#list javaColumns as column>
     <#if column.fktable>
-import ${basePackage}.admin.table.${operationTools.allToLowerCase(column.pkTableName)}.${operationTools.indexToUpperCase(column.pkTableName)};
-import ${basePackage}.admin.table.${operationTools.allToLowerCase(column.pkTableName)}.${operationTools.indexToUpperCase(column.pkTableName)}Constants;
+import ${basePackage}.admin.table.entity.${operationTools.indexToUpperCase(column.pkTableName)};
+import ${basePackage}.admin.table.entityconst.${operationTools.indexToUpperCase(column.pkTableName)}Const;
     </#if>
 </#list>
 
@@ -93,7 +93,7 @@ public class ${operationTools.indexToUpperCase(tableName)}Controller {
     @RequestMapping(value = "/findAll${operationTools.indexToUpperCase(tableName)}", method = RequestMethod.GET)
     public void findAll${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response, String jsonStr, SelectModel selectModel) {
         List<${operationTools.indexToUpperCase(tableName)}> list = ${operationTools.indexToLowerCase(tableName)}Service.findAll(jsonStr, selectModel);
-        ResponseUtils.responseJsonFilter(response, list,${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
+        ResponseUtils.responseJsonFilter(response, list,${operationTools.indexToUpperCase(tableName)}Const.filterselectColumnArr);
     }
 
     /**
@@ -103,7 +103,7 @@ public class ${operationTools.indexToUpperCase(tableName)}Controller {
     public void findPage${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response,String jsonStr,  SelectModel selectModel) {
         PageRequest pageRequest = JpaUtils.getPageRequest(selectModel);
         Page<${operationTools.indexToUpperCase(tableName)}> page = ${operationTools.indexToLowerCase(tableName)}Service.findPage(jsonStr, pageRequest);
-        ResponseUtils.responseJsonFilter(response, PageUtil.pageFormat(page),${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
+        ResponseUtils.responseJsonFilter(response, PageUtil.pageFormat(page),${operationTools.indexToUpperCase(tableName)}Const.filterselectColumnArr);
     }
 
     /**
@@ -112,7 +112,7 @@ public class ${operationTools.indexToUpperCase(tableName)}Controller {
     @RequestMapping(value = "/findId${operationTools.indexToUpperCase(tableName)}", method = RequestMethod.GET)
     public void findId${operationTools.indexToUpperCase(tableName)}(HttpServletResponse response,@RequestParam ${primarykeyJavaType} ${operationTools.indexToLowerCase(primarykey)}) {
         ${operationTools.indexToUpperCase(tableName)} obj = ${operationTools.indexToLowerCase(tableName)}Service.findId(${operationTools.indexToLowerCase(primarykey)});
-        ResponseUtils.responseJsonFilter(response, obj,${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
+        ResponseUtils.responseJsonFilter(response, obj,${operationTools.indexToUpperCase(tableName)}Const.filterselectColumnArr);
     }
 
 
@@ -126,7 +126,7 @@ public class ${operationTools.indexToUpperCase(tableName)}Controller {
         ${primarykeyJavaType} id = ${operationTools.indexToLowerCase(tableName)}.get${operationTools.indexToUpperCase( primarykey )}();
         if (null == id) {
             //添加
-            WhyBeanUtils.filterField(${operationTools.indexToLowerCase(tableName)}, ${operationTools.indexToUpperCase(tableName)}Constants.filteraddColumnArr);
+            WhyBeanUtils.filterField(${operationTools.indexToLowerCase(tableName)}, ${operationTools.indexToUpperCase(tableName)}Const.filteraddColumnArr);
 <#list javaColumns as column>
         <#if column.name == 'tid' >
             ${operationTools.indexToLowerCase(tableName)}.setTid(WhyStringUtil.getUUID());
@@ -140,10 +140,10 @@ public class ${operationTools.indexToUpperCase(tableName)}Controller {
             //修改
             ${operationTools.indexToUpperCase(tableName)} ${operationTools.indexToLowerCase(tableName)}1 = ${operationTools.indexToLowerCase(tableName)}Service.findId(${operationTools.indexToLowerCase(primarykey)});
             Assert.notNull(${operationTools.indexToLowerCase(tableName)}1, "操作失败！");
-            WhyBeanUtils.filterField(${operationTools.indexToLowerCase(tableName)}, ${operationTools.indexToUpperCase(tableName)}Constants.filteraddColumnArr);
+            WhyBeanUtils.filterField(${operationTools.indexToLowerCase(tableName)}, ${operationTools.indexToUpperCase(tableName)}Const.filteraddColumnArr);
             obj = ${operationTools.indexToLowerCase(tableName)}Service.save(${operationTools.indexToLowerCase(tableName)});
         }
-        ResponseUtils.responseJsonFilter(response, obj,${operationTools.indexToUpperCase(tableName)}Constants.filterselectColumnArr);
+        ResponseUtils.responseJsonFilter(response, obj,${operationTools.indexToUpperCase(tableName)}Const.filterselectColumnArr);
     }
 
     /**

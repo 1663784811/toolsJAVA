@@ -3,10 +3,12 @@ package ${basePackage}.admin.table.${operationTools.allToLowerCase(tableName)};
 import cn.cyyaw.jpa.BaseDao;
 import ${basePackage}.admin.table.entity.${operationTools.indexToUpperCase(tableName)};
 
-<#if javaColumns?? && (javaColumns?size > 0)   >
+<#list javaColumns as column>
+<#if column.fktable>
 import java.util.List;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.Query;<#break>
 </#if>
+</#list>
 
 public interface ${operationTools.indexToUpperCase(tableName)}Dao extends BaseDao<${operationTools.indexToUpperCase(tableName)}, ${primarykeyJavaType}> {
 
