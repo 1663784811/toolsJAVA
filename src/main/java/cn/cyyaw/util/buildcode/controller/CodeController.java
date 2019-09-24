@@ -30,8 +30,8 @@ public class CodeController {
                 if ((table == null || table.trim().equals("")) || table.equals(javaData.getTable())) {
                     Map<String, Object> map = new HashMap();
                     //===========================================
-                    map.put("basePackage", "cn.cyyaw.flysandy");
-                    map.put("basePathVue", "/shop");
+                    map.put("basePackage", "cn.cyyaw.weixin");
+                    map.put("basePathVue", "/admin");
 
                     //===========================================
                     map.put("tableName", javaData.getTable());    //数据表

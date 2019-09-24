@@ -1,9 +1,12 @@
 package ${basePackage}.admin.table.${operationTools.allToLowerCase(tableName)};
 
 import cn.cyyaw.jpa.BaseDao;
-import java.util.List;
+import ${basePackage}.admin.table.entity.${operationTools.indexToUpperCase(tableName)};
 
+<#if javaColumns?? && (javaColumns?size > 0)   >
+import java.util.List;
 import org.springframework.data.jpa.repository.Query;
+</#if>
 
 public interface ${operationTools.indexToUpperCase(tableName)}Dao extends BaseDao<${operationTools.indexToUpperCase(tableName)}, ${primarykeyJavaType}> {
 
