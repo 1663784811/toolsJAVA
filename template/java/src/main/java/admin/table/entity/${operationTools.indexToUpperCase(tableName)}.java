@@ -1,10 +1,5 @@
 package ${basePackage}.admin.table.entity;
 
-<#list javaColumns as column>
-    <#if column.fktable>
-import ${basePackage}.admin.table.${operationTools.allToLowerCase(column.pkTableName)}.${operationTools.indexToUpperCase(column.pkTableName)};
-    </#if>
-</#list>
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
