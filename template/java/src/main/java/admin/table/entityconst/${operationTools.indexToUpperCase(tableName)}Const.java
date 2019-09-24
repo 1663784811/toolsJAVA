@@ -1,10 +1,10 @@
-package ${basePackage}.admin.table.${operationTools.allToLowerCase(tableName)};
+package ${basePackage}.admin.table.entityconst;
 
 /**
  * 表常量
- * 类命名：表名Constants
+ * 类命名：表名Const
  */
-public class ${operationTools.indexToUpperCase(tableName)}Constants {
+public class ${operationTools.indexToUpperCase(tableName)}Const {
 
     //允许查询列表
     public final static String selectColumnArr[] = {<#list javaColumns as column ><#if !column.fktable>"${operationTools.allToLowerCase(column.name)}"<#if column_index+1 lt javaColumns?size >,</#if></#if></#list>};

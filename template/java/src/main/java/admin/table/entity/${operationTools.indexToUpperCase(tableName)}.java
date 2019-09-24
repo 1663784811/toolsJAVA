@@ -1,4 +1,4 @@
-package ${basePackage}.admin.table.${operationTools.allToLowerCase(tableName)};
+package ${basePackage}.admin.table.entity;
 
 <#list javaColumns as column>
     <#if column.fktable>
@@ -6,10 +6,13 @@ import ${basePackage}.admin.table.${operationTools.allToLowerCase(column.pkTable
     </#if>
 </#list>
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -34,7 +37,9 @@ public class ${operationTools.indexToUpperCase(tableName)} implements Serializab
     @Basic
     ${interfaceToos.column(column)}
     <#if column.javaType == 'Date' >
-    @JSONField(format="yyyy-MM-dd hh:mm:ss")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     </#if>
     private ${column.javaType} ${operationTools.indexToLowerCase(column.name)};
     </#if>

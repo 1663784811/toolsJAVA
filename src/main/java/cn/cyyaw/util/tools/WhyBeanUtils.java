@@ -48,7 +48,7 @@ public final class WhyBeanUtils extends BeanUtils {
      * @return Map
      */
     public static Map bean2Map(Object bean) {
-        Map returnMap = new HashMap();
+        Map<String,Object> returnMap = new HashMap<String,Object>();
         if (null != bean) {
             Class type = bean.getClass();
             BeanInfo beanInfo = null;
@@ -86,7 +86,7 @@ public final class WhyBeanUtils extends BeanUtils {
      * @param fieldArr 要过滤的属性
      */
     public static Map filterBean2Map(Object bean, String[] fieldArr) {
-        Map returnMap = new HashMap();
+        Map<String,Object> returnMap = new HashMap<String,Object>();
         if (null != bean) {
             Class type = bean.getClass();
             BeanInfo beanInfo = null;
@@ -132,7 +132,7 @@ public final class WhyBeanUtils extends BeanUtils {
      * @return
      */
     public static List<Map> filterListBean2ListMap(List listBean, String[] fieldArr) {
-        List list = new ArrayList();
+        List<Map> list = new ArrayList<Map>();
         if (null != listBean && listBean.size() > 0) {
             for (int i = 0; i < listBean.size(); i++) {
                 list.add(filterBean2Map(listBean.get(i), fieldArr));
@@ -149,7 +149,7 @@ public final class WhyBeanUtils extends BeanUtils {
      * @param fieldArr 要过滤的属性数组
      */
     public static Map filterPage(Page page, String[] fieldArr) {
-        Map returnMap = new HashMap();
+        Map<String,Object> returnMap = new HashMap<String,Object>();
         returnMap.put("page", page.getPageable().getPageNumber() + 1);
         returnMap.put("size", page.getPageable().getPageSize());
         returnMap.put("total", page.getTotalElements());

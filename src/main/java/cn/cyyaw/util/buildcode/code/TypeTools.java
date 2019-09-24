@@ -51,6 +51,9 @@ public class TypeTools {
         ) {
             //============= 数值字符
             objType = "String";
+        }else if (type.equals("DECIMAL") || type.equals("decimal")) {
+            //============= 数值字符
+            objType = "BigDecimal";
         }
         return objType;
     }
