@@ -162,7 +162,7 @@
                 for (let i = 0; i < selectData.length; i++) {
                     idArr.push(selectData[i].id);
                 }
-                this.delIdFn({idArr: idArr});
+                this.delIdFn(idArr);
             },
             //点击搜索
             clickSearchBtn: function () {

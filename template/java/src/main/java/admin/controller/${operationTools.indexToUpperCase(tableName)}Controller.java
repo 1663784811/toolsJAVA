@@ -150,7 +150,7 @@ public class ${operationTools.indexToUpperCase(tableName)}Controller {
      * 删除
      */
     @RequestMapping(value = "/del${operationTools.indexToUpperCase(tableName)}")
-    public Map del${operationTools.indexToUpperCase(tableName)}( @RequestParam ${primarykeyJavaType} ${operationTools.indexToLowerCase(primarykey)}Arr[]) {
+    public Map del${operationTools.indexToUpperCase(tableName)}( @RequestBody ${primarykeyJavaType} ${operationTools.indexToLowerCase(primarykey)}Arr[]) {
         ${operationTools.indexToLowerCase(tableName)}Service.del(${operationTools.indexToLowerCase(primarykey)}Arr);
         return BaseConstants.tableDelSuccess;
     }
