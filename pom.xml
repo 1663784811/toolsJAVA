@@ -125,12 +125,18 @@
         </dependency>
 
 
-
         <!-- ==============        操作系统信息    ============= -->
         <dependency>
             <groupId>org.fusesource</groupId>
             <artifactId>sigar</artifactId>
             <version>1.6.4</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jodd</groupId>
+            <artifactId>jodd-http</artifactId>
+            <version>5.0.13</version>
             <scope>provided</scope>
         </dependency>
 
