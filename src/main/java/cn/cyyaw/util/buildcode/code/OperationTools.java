@@ -50,6 +50,8 @@ public class OperationTools {
                 return ", columnDefinition = \"" + dbType + dbTypeComment(javaColumn) + "\"";
             } else if (dbType.equals("varchar")) {
                 return ", columnDefinition = \"" + dbType + "(" + javaColumn.getLenth() + ")" + dbTypeComment(javaColumn) + "\"";
+            } else if (dbType.equals("decimal")) {
+                return ", columnDefinition = \"" + dbType + "(" + javaColumn.getLenth() + "，2 )" + dbTypeComment(javaColumn) + "\"";
             }
         }
         return "";
