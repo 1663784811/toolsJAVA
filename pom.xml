@@ -133,13 +133,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.jodd</groupId>
-            <artifactId>jodd-http</artifactId>
-            <version>5.0.13</version>
-            <scope>provided</scope>
-        </dependency>
-
 
     </dependencies>
 
