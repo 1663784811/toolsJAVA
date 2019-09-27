@@ -39,9 +39,9 @@ public class testDataBase {
                 System.out.println("=====数据库类型：" + javaColumn.getDbType());
                 System.out.println("=====java类型：" + javaColumn.getJavaType());
                 System.out.println("=====大小：" + javaColumn.getLenth());
-                System.out.println("=====是否自增：" + javaColumn.getAutoIncrement());
-                System.out.println("=====是否是主键：" + javaColumn.getPrimary());
-                System.out.println("=====是否是外键：" + javaColumn.getFktable());
+                System.out.println("=====是否自增：" + javaColumn.getIsAutoIncrement());
+                System.out.println("=====是否是主键：" + javaColumn.getIsPrimary());
+                System.out.println("=====是否是外键：" + javaColumn.getIsFktable());
                 System.out.println("=====外键指向的表：" + javaColumn.getPkTableName());
                 System.out.println("=====外键指向的字段：" + javaColumn.getPkTableColumn());
                 System.out.println("==============");

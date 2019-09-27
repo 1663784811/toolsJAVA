@@ -1,8 +1,11 @@
 package cn.cyyaw.util.buildcode.entity.java;
 
+import lombok.Data;
+
 /**
  * 主键
  */
+@Data
 public class PrimaryKeys {
 
     /**
@@ -18,28 +21,4 @@ public class PrimaryKeys {
      * 主键名
      */
     private String primarykeyName;
-
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
-
-    public void setColumnName(String columnName) {
-        this.columnName = columnName;
-    }
-
-    public void setPrimarykeyName(String primarykeyName) {
-        this.primarykeyName = primarykeyName;
-    }
-
-    public String getTableName() {
-        return tableName;
-    }
-
-    public String getColumnName() {
-        return columnName;
-    }
-
-    public String getPrimarykeyName() {
-        return primarykeyName;
-    }
 }

@@ -1,7 +1,6 @@
 package cn.cyyaw.util.buildcode.entity.database;
 
 
-
 import cn.cyyaw.util.buildcode.code.TypeTools;
 import cn.cyyaw.util.buildcode.config.DataConfig;
 import cn.cyyaw.util.buildcode.entity.java.ForeignKey;
@@ -51,7 +50,7 @@ public class DataBase {
                 if (javaColumnList != null && javaColumnList.size() > 0) {
                     for (int i = 0; i < javaColumnList.size(); i++) {
                         JavaColumn javaColumn = javaColumnList.get(i);
-                        if (javaColumn.getPrimary()) {
+                        if (javaColumn.getIsPrimary()) {
                             javaData.setPrimarykey(javaColumn.getName());
                             javaData.setPrimarykeyDbType(javaColumn.getDbType());
                             javaData.setPrimarykeyJavaType(javaColumn.getJavaType());
@@ -90,16 +89,16 @@ public class DataBase {
             String type = columns.getString("TYPE_NAME");
             javaColumn.setDbType(type);
             javaColumn.setJavaType(TypeTools.dbType2JavaType(type));
-            javaColumn.setAutoIncrement(columns.getString("IS_AUTOINCREMENT").equals("YES"));//是否自增加
+            javaColumn.setIsAutoIncrement(columns.getString("IS_AUTOINCREMENT").equals("YES"));//是否自增加
             javaColumn.setDefaultValue(columns.getString("COLUMN_DEF"));//默认值
             for (int i = 0; i < getPrimaryKeys.size(); i++) {
                 if (javaColumn.getName().equals(getPrimaryKeys.get(i).getColumnName())) {
-                    javaColumn.setPrimary(true);
+                    javaColumn.setIsPrimary(true);
                 }
             }
             for (int j = 0; j < getForeignKeys.size(); j++) {
                 if (javaColumn.getName().equals(getForeignKeys.get(j).getFkColumnName())) {
-                    javaColumn.setFktable(true);
+                    javaColumn.setIsFktable(true);
                     javaColumn.setPkTableName(getForeignKeys.get(j).getPkTableName());
                     javaColumn.setPkTableColumn(getForeignKeys.get(j).getPkColumnName());
                     javaColumn.setPkTableNote(getForeignKeys.get(j).getPkTableNote());

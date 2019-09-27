@@ -1,8 +1,11 @@
 package cn.cyyaw.util.buildcode.entity.java;
 
+import lombok.Data;
+
 /**
  * 数据表字段
  */
+@Data
 public class JavaColumn {
 
     /**
@@ -73,117 +76,4 @@ public class JavaColumn {
      * 外键指向的表注释
      */
     private String pkTableNote;
-
-    public void setNull(Boolean aNull) {
-        isNull = aNull;
-    }
-
-    public Boolean getNull() {
-        return isNull;
-    }
-
-    public void setUnique(Boolean unique) {
-        isUnique = unique;
-    }
-
-    public Boolean getUnique() {
-        return isUnique;
-    }
-
-    public void setPkTableNote(String pkTableNote) {
-        this.pkTableNote = pkTableNote;
-    }
-
-    public String getPkTableNote() {
-        return pkTableNote;
-    }
-
-    public void setPrimary(Boolean primary) {
-        isPrimary = primary;
-    }
-
-    public void setPkTableName(String pkTableName) {
-        this.pkTableName = pkTableName;
-    }
-
-    public void setPkTableColumn(String pkTableColumn) {
-        this.pkTableColumn = pkTableColumn;
-    }
-
-    public Boolean getPrimary() {
-        return isPrimary;
-    }
-
-    public String getPkTableName() {
-        return pkTableName;
-    }
-
-    public String getPkTableColumn() {
-        return pkTableColumn;
-    }
-
-    public void setAutoIncrement(Boolean autoIncrement) {
-        isAutoIncrement = autoIncrement;
-    }
-
-    public void setDefaultValue(String defaultValue) {
-        this.defaultValue = defaultValue;
-    }
-
-    public void setFktable(Boolean fktable) {
-        isFktable = fktable;
-    }
-
-
-    public Boolean getAutoIncrement() {
-        return isAutoIncrement;
-    }
-
-    public String getDefaultValue() {
-        return defaultValue;
-    }
-
-    public Boolean getFktable() {
-        return isFktable;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getLenth() {
-        return lenth;
-    }
-
-    public void setLenth(Integer lenth) {
-        this.lenth = lenth;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public void setDbType(String dbType) {
-        this.dbType = dbType;
-    }
-
-    public void setJavaType(String javaType) {
-        this.javaType = javaType;
-    }
-
-    public String getDbType() {
-        return dbType;
-    }
-
-    public String getJavaType() {
-        return javaType;
-    }
 }

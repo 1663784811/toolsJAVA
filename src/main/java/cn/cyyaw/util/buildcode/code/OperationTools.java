@@ -17,7 +17,7 @@ public class OperationTools {
      */
     public static String dbTypeNull(JavaColumn javaColumn) {
         if (null != javaColumn) {
-            if (!javaColumn.getNull()) {
+            if (!javaColumn.getIsNull()) {
                 return " ,nullable = true";
             }
         }
@@ -31,7 +31,7 @@ public class OperationTools {
      */
     public static String dbTypeUnique(JavaColumn javaColumn) {
         if (null != javaColumn) {
-            if (javaColumn.getUnique()) {
+            if (javaColumn.getIsUnique()) {
                 return " ,unique = true";
             }
         }

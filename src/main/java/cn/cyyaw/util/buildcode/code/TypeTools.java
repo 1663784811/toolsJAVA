@@ -175,19 +175,19 @@ public class TypeTools {
         if (null != javaColumn) {
             vueJson.setKey(javaColumn.getName());
             vueJson.setTitle(javaColumn.getNote());
-            vueJson.setType(javaColumn.getPrimary() ? "selection" : "html");
+            vueJson.setType(javaColumn.getIsPrimary() ? "selection" : "html");
             vueJson.setLength(javaColumn.getLenth());
             vueJson.setRegStr("");
             vueJson.setRequire(false);
             vueJson.setMessage(javaColumn.getNote());
-            if (javaColumn.getPrimary()) {
+            if (javaColumn.getIsPrimary()) {
                 vueJson.setControlType("hidden");
             } else {
                 vueJson.setControlType(javaType2ControlType(javaColumn.getDbType()));
             }
             vueJson.setFormat(dateType2Format(javaType2ControlType(javaColumn.getDbType())));
 
-            vueJson.setWhere(!javaColumn.getPrimary());
+            vueJson.setWhere(!javaColumn.getIsPrimary());
             vueJson.setShowColumn(true);
 
             vueJson.setJavaType(dbType2JavaType(javaColumn.getDbType()).toLowerCase());

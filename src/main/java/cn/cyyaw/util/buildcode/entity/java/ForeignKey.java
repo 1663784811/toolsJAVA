@@ -1,8 +1,11 @@
 package cn.cyyaw.util.buildcode.entity.java;
 
+import lombok.Data;
+
 /**
  * 外键
  */
+@Data
 public class ForeignKey {
 
     /**
@@ -34,52 +37,4 @@ public class ForeignKey {
      * 外键表注释
      */
     private String fkTableNote;
-
-    public void setPkTableName(String pkTableName) {
-        this.pkTableName = pkTableName;
-    }
-
-    public void setPkColumnName(String pkColumnName) {
-        this.pkColumnName = pkColumnName;
-    }
-
-    public void setPkTableNote(String pkTableNote) {
-        this.pkTableNote = pkTableNote;
-    }
-
-    public void setFkTableName(String fkTableName) {
-        this.fkTableName = fkTableName;
-    }
-
-    public void setFkColumnName(String fkColumnName) {
-        this.fkColumnName = fkColumnName;
-    }
-
-    public void setFkTableNote(String fkTableNote) {
-        this.fkTableNote = fkTableNote;
-    }
-
-    public String getPkTableName() {
-        return pkTableName;
-    }
-
-    public String getPkColumnName() {
-        return pkColumnName;
-    }
-
-    public String getPkTableNote() {
-        return pkTableNote;
-    }
-
-    public String getFkTableName() {
-        return fkTableName;
-    }
-
-    public String getFkColumnName() {
-        return fkColumnName;
-    }
-
-    public String getFkTableNote() {
-        return fkTableNote;
-    }
 }
