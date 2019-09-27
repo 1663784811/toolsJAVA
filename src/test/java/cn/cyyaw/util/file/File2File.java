@@ -112,7 +112,7 @@ public class File2File {
      * @return
      */
     public static List<String> getJsonStr(String str) {
-        List<String> stringList = new ArrayList<>();
+        List<String> stringList = new ArrayList<String>();
         for (int i = 0; i < str.length(); i++) {
             StringBuffer sb = new StringBuffer();
             char c = str.charAt(i);

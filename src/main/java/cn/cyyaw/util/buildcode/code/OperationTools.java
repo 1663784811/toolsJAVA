@@ -49,9 +49,9 @@ public class OperationTools {
             if (dbType.equals("text") || dbType.equals("int") || dbType.equals("datetime")) {
                 return ", columnDefinition = \"" + dbType + dbTypeComment(javaColumn) + "\"";
             } else if (dbType.equals("varchar")) {
-                return ", columnDefinition = \"" + dbType + "(" + javaColumn.getLenth() + ")" + dbTypeComment(javaColumn) + "\"";
+                return ", columnDefinition = \"" + dbType + "(" + javaColumn.getLength() + ")" + dbTypeComment(javaColumn) + "\"";
             } else if (dbType.equals("decimal")) {
-                return ", columnDefinition = \"" + dbType + "(" + javaColumn.getLenth() + "，2 )" + dbTypeComment(javaColumn) + "\"";
+                return ", columnDefinition = \"" + dbType + "(" + javaColumn.getLength() + "，2 )" + dbTypeComment(javaColumn) + "\"";
             }
         }
         return "";
@@ -80,7 +80,7 @@ public class OperationTools {
      */
     public static String dbTypeLength(JavaColumn javaColumn) {
         if (null != javaColumn) {
-            Integer lenth = javaColumn.getLenth();
+            Integer lenth = javaColumn.getLength();
             if (lenth <= 225) {
                 return ", length = " + lenth;
             }

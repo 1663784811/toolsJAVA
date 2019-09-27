@@ -85,7 +85,7 @@ public class DataBase {
             //=================
             javaColumn.setName(columns.getString("COLUMN_NAME"));//字段名
             javaColumn.setNote(columns.getString("REMARKS"));//注释
-            javaColumn.setLenth(columns.getInt("COLUMN_SIZE"));//长度
+            javaColumn.setLength(columns.getInt("COLUMN_SIZE"));//长度
             String type = columns.getString("TYPE_NAME");
             javaColumn.setDbType(type);
             javaColumn.setJavaType(TypeTools.dbType2JavaType(type));
