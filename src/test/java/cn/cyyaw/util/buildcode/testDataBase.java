@@ -38,7 +38,7 @@ public class testDataBase {
                 System.out.println("=====注释：" + javaColumn.getNote());
                 System.out.println("=====数据库类型：" + javaColumn.getDbType());
                 System.out.println("=====java类型：" + javaColumn.getJavaType());
-                System.out.println("=====大小：" + javaColumn.getLenth());
+                System.out.println("=====大小：" + javaColumn.getLength());
                 System.out.println("=====是否自增：" + javaColumn.getIsAutoIncrement());
                 System.out.println("=====是否是主键：" + javaColumn.getIsPrimary());
                 System.out.println("=====是否是外键：" + javaColumn.getIsFktable());
