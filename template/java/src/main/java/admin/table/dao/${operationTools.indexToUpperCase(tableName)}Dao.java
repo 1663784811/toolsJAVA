@@ -4,7 +4,7 @@ import cn.cyyaw.jpa.BaseDao;
 import ${basePackage}.admin.table.entity.${operationTools.indexToUpperCase(tableName)};
 
 <#list javaColumns as column>
-<#if column.fktable>
+<#if column.isFktable>
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;<#break>
 </#if>
@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;<#break>
 public interface ${operationTools.indexToUpperCase(tableName)}Dao extends BaseDao<${operationTools.indexToUpperCase(tableName)}, ${primarykeyJavaType}> {
 
 <#list javaColumns as column>
-<#if column.fktable>
+<#if column.isFktable>
     /**
      * 外键查询
      */

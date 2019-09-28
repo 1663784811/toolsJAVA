@@ -13,15 +13,17 @@ let json ={
       "title":"${column.title!}",
       "type":"${column.type!}",
       "length":"${(column.length!255)?c}",
-      "isRequire":${column.require?string('true','false')},
+      "isRequire":${column.isRequire?string('true','false')},
       "regStr":"${column.regStr!}",
       "message":"${column.message!}",
       "controlType":"${column.controlType!}",
+<#if column.javaType == 'integer'>
       "max":"${column.max!}",
       "min":"${column.min!}",
+</#if>
       "format":"${column.format!}",
-      "isShowColumn":${column.showColumn?string('true','false')},
-      "isWhere":${column.where?string('true','false')},
+      "isShowColumn":${column.isShowColumn?string('true','false')},
+      "isWhere":${column.isWhere?string('true','false')},
       "javaWhere":"${column.javaWhere!}",
       "javaType":"${column.javaType!}"
     }

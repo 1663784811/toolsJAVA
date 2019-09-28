@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 <#list javaColumns as column>
-<#if column.fktable>
+<#if column.isFktable>
 import java.util.List;<#break>
 </#if>
 </#list>
@@ -30,7 +30,7 @@ public class ${operationTools.indexToUpperCase(tableName)}ServiceImpl extends Ba
     }
 
 <#list javaColumns as column>
-<#if column.fktable>
+<#if column.isFktable>
     /**
      * 外键查询
      */

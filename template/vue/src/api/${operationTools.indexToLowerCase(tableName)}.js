@@ -29,7 +29,7 @@ export const API_del${operationTools.indexToUpperCase(tableName)} = (parameter) 
 
 
 <#list javaColumns as column>
-    <#if column.fktable>
+    <#if column.isFktable>
 /**
  * 外键
  */

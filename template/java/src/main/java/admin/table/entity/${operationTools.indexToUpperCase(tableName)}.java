@@ -17,14 +17,14 @@ public class ${operationTools.indexToUpperCase(tableName)} implements Serializab
 <#-- ============================     字段列表     ======================== -->
 <#list javaColumns as column>
     <#-- ============================    是否是主键     ======================== -->
-    <#if column.primary>
+    <#if column.isPrimary>
     @Id
-        <#if column.autoIncrement>
+        <#if column.isAutoIncrement>
     @GeneratedValue(strategy=GenerationType.IDENTITY)
         </#if>
     </#if>
     <#-- ============================     是否是外键     ======================== -->
-    <#if column.fktable>
+    <#if column.isFktable>
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "${column.name}", referencedColumnName = "${column.pkTableColumn}")
     private ${operationTools.indexToUpperCase(column.pkTableName)} ${operationTools.indexToLowerCase(column.pkTableName)};

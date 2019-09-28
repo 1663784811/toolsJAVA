@@ -9,7 +9,7 @@ import cn.cyyaw.util.entity.SelectModel;
 import cn.cyyaw.util.tools.*;
 
 <#list javaColumns as column>
-    <#if column.fktable>
+    <#if column.isFktable>
 import ${basePackage}.admin.table.entity.${operationTools.indexToUpperCase(column.pkTableName)};
 import ${basePackage}.admin.table.entityconst.${operationTools.indexToUpperCase(column.pkTableName)}Const;
     </#if>
@@ -156,7 +156,7 @@ public class ${operationTools.indexToUpperCase(tableName)}Controller {
     }
 
 <#list javaColumns as column>
-<#if column.fktable>
+<#if column.isFktable>
     /**
      * 外键查询
      */
