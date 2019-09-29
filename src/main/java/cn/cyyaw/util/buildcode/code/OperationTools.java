@@ -4,10 +4,24 @@ package cn.cyyaw.util.buildcode.code;
 import cn.cyyaw.util.buildcode.entity.java.JavaColumn;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 
 public class OperationTools {
+
+
+    public static JavaColumn getPK(List<JavaColumn> javaColumnList) {
+        if (null != javaColumnList && javaColumnList.size() > 0) {
+            for (int i = 0; i < javaColumnList.size(); i++) {
+                JavaColumn javaColumn = javaColumnList.get(i);
+                if (javaColumn.getIsPrimary()) {
+                    return javaColumn;
+                }
+            }
+        }
+        return null;
+    }
 
 
     /**
