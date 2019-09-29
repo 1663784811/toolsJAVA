@@ -1,4 +1,4 @@
-import {EXPLAINFIELD} from "@/assets/common/js/global.js";
+import {EXPLAINFIELD,render} from "@/assets/common/js/global.js";
 
 let json ={
   "title": "${tableNote}",
