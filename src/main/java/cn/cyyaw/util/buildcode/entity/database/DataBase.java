@@ -47,18 +47,19 @@ public class DataBase {
                 javaData.setTableType(tables.getString("TABLE_TYPE"));
                 List<JavaColumn> javaColumnList = getColumnList(table_name);
                 javaData.setJavaColumns(javaColumnList);//字段
-                if (javaColumnList != null && javaColumnList.size() > 0) {
-                    for (int i = 0; i < javaColumnList.size(); i++) {
-                        JavaColumn javaColumn = javaColumnList.get(i);
-                        if (javaColumn.getIsPrimary()) {
-                            javaData.setPrimarykey(javaColumn.getName());
-                            javaData.setPrimarykeyDbType(javaColumn.getDbType());
-                            javaData.setPrimarykeyJavaType(javaColumn.getJavaType());
-                            javaData.setPrimarykeyNote(javaColumn.getNote());
-                            continue;
-                        }
-                    }
-                }
+
+//                if (javaColumnList != null && javaColumnList.size() > 0) {
+//                    for (int i = 0; i < javaColumnList.size(); i++) {
+//                        JavaColumn javaColumn = javaColumnList.get(i);
+//                        if (javaColumn.getIsPrimary()) {
+//                            javaData.setPrimarykey(javaColumn.getName());
+//                            javaData.setPrimarykeyDbType(javaColumn.getDbType());
+//                            javaData.setPrimarykeyJavaType(javaColumn.getJavaType());
+//                            javaData.setPrimarykeyNote(javaColumn.getNote());
+//                            continue;
+//                        }
+//                    }
+//                }
                 javaDataArrayList.add(javaData);
             }
         }

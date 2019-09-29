@@ -25,33 +25,33 @@ public class CodeController {
 
 
         if (null != tableList) {
-            for (int i = 0; i < tableList.size(); i++) {
-                JavaData javaData = tableList.get(i);
-                if ((table == null || table.trim().equals("")) || table.equals(javaData.getTable())) {
-                    Map<String, Object> map = new HashMap();
-                    //===========================================
-                    map.put("basePackage", "cn.cyyaw.weixin");          //基础包
-                    map.put("basePathVue", "/admin");                   //基础路径
-
-                    //===========================================
-                    map.put("tableName", javaData.getTable());    //数据表
-                    map.put("tableNote", javaData.getTableNote());  //表注释
-                    map.put("primarykey", javaData.getPrimarykey());  // 主键
-                    map.put("primarykeyJavaType", javaData.getPrimarykeyJavaType());  //主键类型
-                    map.put("javaColumns", javaData.getJavaColumns());    //
-                    map.put("vueJsons", TypeTools.javaColumnList2VueJsonList(javaData.getJavaColumns()));
-                    //===========================================
-                    map.put("operationTools", operationTools);//工具类
-                    map.put("interfaceToos", interfaceToos);//工具类
-                    createCode.setDataMap(map);
-                    System.out.println("正在生成文件。。。:" + tableList.get(i).getTableNote());
-                    if (createCode.out()) {
-                        System.out.println("生成文件成功");
-                    } else {
-                        System.out.println("生成文件失败");
-                    }
-                }
-            }
+//            for (int i = 0; i < tableList.size(); i++) {
+//                JavaData javaData = tableList.get(i);
+//                if ((table == null || table.trim().equals("")) || table.equals(javaData.getTable())) {
+//                    Map<String, Object> map = new HashMap();
+//                    //===========================================
+//                    map.put("basePackage", "cn.cyyaw.weixin");          //基础包
+//                    map.put("basePathVue", "/admin");                   //基础路径
+//
+//                    //===========================================
+//                    map.put("tableName", javaData.getTable());    //数据表
+//                    map.put("tableNote", javaData.getTableNote());  //表注释
+//                    map.put("primarykey", javaData.getPrimarykey());  // 主键
+//                    map.put("primarykeyJavaType", javaData.getPrimarykeyJavaType());  //主键类型
+//                    map.put("javaColumns", javaData.getJavaColumns());    //
+//                    map.put("vueJsons", TypeTools.javaColumnList2VueJsonList(javaData.getJavaColumns()));
+//                    //===========================================
+//                    map.put("operationTools", operationTools);//工具类
+//                    map.put("interfaceToos", interfaceToos);//工具类
+//                    createCode.setDataMap(map);
+//                    System.out.println("正在生成文件。。。:" + tableList.get(i).getTableNote());
+//                    if (createCode.out()) {
+//                        System.out.println("生成文件成功");
+//                    } else {
+//                        System.out.println("生成文件失败");
+//                    }
+//                }
+//            }
         }
     }
 }
