@@ -1,7 +1,6 @@
-package cn.cyyaw.util.buildcode;
+package cn.cyyaw.util.buildcode.code;
 
 
-import cn.cyyaw.util.buildcode.code.CreateCode;
 import org.junit.Test;
 
 import java.io.IOException;

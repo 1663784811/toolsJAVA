@@ -53,6 +53,7 @@ public class CreateCode {
         this.createFilePath = createFilePath;
         cfg = new Configuration(Configuration.VERSION_2_3_28);
         fileCreateCode = new File(templatePath);
+        System.out.println(fileCreateCode.getAbsolutePath());
         //设置模板解释目录
         cfg.setDirectoryForTemplateLoading(fileCreateCode);
         //设置默认编码

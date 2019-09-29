@@ -3,10 +3,7 @@ package cn.cyyaw.util.buildcode.entity.database;
 
 import cn.cyyaw.util.buildcode.code.TypeTools;
 import cn.cyyaw.util.buildcode.config.DataConfig;
-import cn.cyyaw.util.buildcode.entity.java.ForeignKey;
-import cn.cyyaw.util.buildcode.entity.java.JavaColumn;
-import cn.cyyaw.util.buildcode.entity.java.JavaData;
-import cn.cyyaw.util.buildcode.entity.java.PrimaryKeys;
+import cn.cyyaw.util.buildcode.entity.java.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -41,25 +38,12 @@ public class DataBase {
             String table_name = tables.getString("TABLE_NAME");
             if (null != table_name && !table_name.equals("")) {
                 JavaData javaData = new JavaData();
-                javaData.setDatabase(connection.getCatalog());
-                javaData.setTable(table_name);
-                javaData.setTableNote(getTableNotes(table_name));
-                javaData.setTableType(tables.getString("TABLE_TYPE"));
+                javaData.setDatabase(connection.getCatalog());                           //数据库名
+                javaData.setTable(table_name);                                           //表名
+                javaData.setTableNote(getTableNotes(table_name));                        //表注释
+                javaData.setTableType(tables.getString("TABLE_TYPE"));       //数据表类型  （表 ， 视图，。。。）
                 List<JavaColumn> javaColumnList = getColumnList(table_name);
-                javaData.setJavaColumns(javaColumnList);//字段
-
-//                if (javaColumnList != null && javaColumnList.size() > 0) {
-//                    for (int i = 0; i < javaColumnList.size(); i++) {
-//                        JavaColumn javaColumn = javaColumnList.get(i);
-//                        if (javaColumn.getIsPrimary()) {
-//                            javaData.setPrimarykey(javaColumn.getName());
-//                            javaData.setPrimarykeyDbType(javaColumn.getDbType());
-//                            javaData.setPrimarykeyJavaType(javaColumn.getJavaType());
-//                            javaData.setPrimarykeyNote(javaColumn.getNote());
-//                            continue;
-//                        }
-//                    }
-//                }
+                javaData.setJavaColumns(javaColumnList);                                 //字段
                 javaDataArrayList.add(javaData);
             }
         }
@@ -74,60 +58,76 @@ public class DataBase {
      * @throws SQLException
      */
     public List<JavaColumn> getColumnList(String tableName) throws SQLException {
+
         ArrayList<JavaColumn> javaColumnList = new ArrayList<JavaColumn>();
         DatabaseMetaData metaData = connection.getMetaData();
-        //==== 获取主键
-        List<PrimaryKeys> getPrimaryKeys = getPrimaryKeys(tableName);
-        //==== 获取外键
-        List<ForeignKey> getForeignKeys = getForeignKeys(tableName);
         ResultSet columns = metaData.getColumns(connection.getCatalog(), "%", tableName, "%");
-
-        if (tableName.equals("g_order")) {
-            ResultSet indexInfo = metaData.getIndexInfo(connection.getCatalog(), "%", tableName, false, false);
-            int n = 1;
-            while (indexInfo.next()) {
-                String index_name = indexInfo.getString("INDEX_NAME");
-                String unique = indexInfo.getString("NON_UNIQUE");
-                String table_cat = indexInfo.getString("TABLE_CAT");
-                String column_name = indexInfo.getString("column_name");
-                System.out.println(column_name);
-                n++;
-
-            }
-        }
-
-
         while (columns.next()) {
             JavaColumn javaColumn = new JavaColumn();
-            //=================
-            javaColumn.setName(columns.getString("COLUMN_NAME"));//字段名
-            javaColumn.setNote(columns.getString("REMARKS"));//注释
-            javaColumn.setLength(columns.getInt("COLUMN_SIZE"));//长度
             String type = columns.getString("TYPE_NAME");
-            javaColumn.setDbType(type);    //   数据库类型
-            javaColumn.setJavaType(TypeTools.dbType2JavaType(type));
-            javaColumn.setIsAutoIncrement(columns.getString("IS_AUTOINCREMENT").equals("YES"));//是否自增加
+            //===============================
+            javaColumn.setColumnName(columns.getString("COLUMN_NAME"));    //字段名
+            javaColumn.setDbType(type);                                          //数据库字段类型
+            javaColumn.setLength(columns.getInt("COLUMN_SIZE"));     //长度
+            javaColumn.setJavaType(TypeTools.dbType2JavaType(type));             //java 类型
             javaColumn.setDefaultValue(columns.getString("COLUMN_DEF"));//默认值
-
-            String string = columns.getString("ORDINAL_POSITION");
-
-
-            for (int i = 0; i < getPrimaryKeys.size(); i++) {
-                if (javaColumn.getName().equals(getPrimaryKeys.get(i).getColumnName())) {
+            javaColumn.setNote(columns.getString("REMARKS"));        //注释
+            javaColumn.setIsAutoIncrement(columns.getString("IS_AUTOINCREMENT").equals("YES"));//是否自增加
+            javaColumn.setIsNull(columns.getString("NULLABLE").equals("0"));  //是否可以为null
+            //===============================
+            javaColumnList.add(javaColumn);
+        }
+        //==== 获取索引
+        List<IndexKey> indexKeyList = getIndexList(tableName);
+        //==== 获取主键
+        List<PrimaryKeys> primaryKeysList = getPrimaryKeys(tableName);
+        //==== 获取外键
+        List<ForeignKey> foreignKeyList = getForeignKeys(tableName);
+        for (int i = 0; i < javaColumnList.size(); i++) {
+            JavaColumn javaColumn = javaColumnList.get(i);
+            String columnName = javaColumn.getColumnName();
+            for (int j = 0; j < indexKeyList.size(); j++) {
+                IndexKey indexKey = indexKeyList.get(j);
+                if (indexKey.getColumnName().equals(columnName)) {
+                    javaColumn.setIsIndex(true);
+                    javaColumn.setIsUnique(indexKey.getIsUnique());
+                    javaColumn.setIndexType(indexKey.getIndexType());
+                }
+            }
+            for (int j = 0; j < primaryKeysList.size(); j++) {
+                PrimaryKeys primaryKeys = primaryKeysList.get(j);
+                if (primaryKeys.getColumnName().equals(columnName)) {
                     javaColumn.setIsPrimary(true);
                 }
             }
-            for (int j = 0; j < getForeignKeys.size(); j++) {
-                if (javaColumn.getName().equals(getForeignKeys.get(j).getFkColumnName())) {
-                    javaColumn.setIsFktable(true);
-                    javaColumn.setPkTableName(getForeignKeys.get(j).getPkTableName());
-                    javaColumn.setPkTableColumn(getForeignKeys.get(j).getPkColumnName());
-                    javaColumn.setPkTableNote(getForeignKeys.get(j).getPkTableNote());
+            for (int j = 0; j < foreignKeyList.size(); j++) {
+                ForeignKey foreignKey = foreignKeyList.get(j);
+                if (foreignKey.getFkTableNote().equals(tableName) && foreignKey.getFkColumnName().equals(columnName)) {
+                    javaColumn.setPkTableName(foreignKey.getPkTableName());
+                    javaColumn.setPkColumnName(foreignKey.getPkColumnName());
                 }
             }
-            javaColumnList.add(javaColumn);
         }
         return javaColumnList;
+    }
+
+
+    /**
+     * 获取索引
+     */
+    public List<IndexKey> getIndexList(String tableName) throws SQLException {
+        List<IndexKey> list = new ArrayList<IndexKey>();
+        DatabaseMetaData metaData = connection.getMetaData();
+        ResultSet indexInfo = metaData.getIndexInfo(connection.getCatalog(), "%", tableName, false, false);
+        while (indexInfo.next()) {
+            IndexKey indexKey = new IndexKey();
+            indexKey.setTableName(indexInfo.getString("TABLE_NAME"));
+            indexKey.setColumnName(indexInfo.getString("COLUMN_NAME"));
+            indexKey.setIsUnique(indexInfo.getString("NON_UNIQUE").equals("0"));
+            indexKey.setIndexType(indexInfo.getString("TYPE"));
+            list.add(indexKey);
+        }
+        return list;
     }
 
 
@@ -145,7 +145,6 @@ public class DataBase {
             PrimaryKeys primaryKeysList = new PrimaryKeys();
             primaryKeysList.setTableName(primaryKeys.getString("TABLE_NAME"));
             primaryKeysList.setColumnName(primaryKeys.getString("COLUMN_NAME"));
-            primaryKeysList.setPrimarykeyName(primaryKeys.getString("PK_NAME"));
             list.add(primaryKeysList);
         }
         return list;
@@ -154,24 +153,17 @@ public class DataBase {
 
     /**
      * 获取外键列表
-     *
-     * @param tableName 数据表名
-     * @throws SQLException
      */
-    public List<ForeignKey> getForeignKeys(String tableName) throws SQLException {
+    public List<ForeignKey> getForeignKeys(String taleName) throws SQLException {
         List<ForeignKey> list = new ArrayList<ForeignKey>();
         DatabaseMetaData metaData = connection.getMetaData();
-        ResultSet foreignKeyResultSet = metaData.getImportedKeys(connection.getCatalog(), "%", tableName);
+        ResultSet foreignKeyResultSet = metaData.getImportedKeys(connection.getCatalog(), "%", taleName);
         while (foreignKeyResultSet.next()) {
             ForeignKey foreignKey = new ForeignKey();
-            String pkTableName = foreignKeyResultSet.getString("PKTABLE_NAME");
-            foreignKey.setPkTableName(pkTableName);
-            foreignKey.setPkColumnName(foreignKeyResultSet.getString("PKCOLUMN_NAME"));
-            foreignKey.setPkTableNote(getTableNotes(pkTableName));
-            String fkTableName = foreignKeyResultSet.getString("FKTABLE_NAME");
-            foreignKey.setFkTableName(fkTableName);
+            foreignKey.setFkTableNote(foreignKeyResultSet.getString("FKTABLE_NAME"));
             foreignKey.setFkColumnName(foreignKeyResultSet.getString("FKCOLUMN_NAME"));
-            foreignKey.setFkTableNote(getTableNotes(fkTableName));
+            foreignKey.setPkTableName(foreignKeyResultSet.getString("PKTABLE_NAME"));
+            foreignKey.setPkColumnName(foreignKeyResultSet.getString("PKCOLUMN_NAME"));
             list.add(foreignKey);
         }
         return list;

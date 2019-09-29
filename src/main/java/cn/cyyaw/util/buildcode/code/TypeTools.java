@@ -173,7 +173,7 @@ public class TypeTools {
     public static VueJson javaColumn2VueJson(JavaColumn javaColumn) {
         VueJson vueJson = new VueJson();
         if (null != javaColumn) {
-            vueJson.setKey(javaColumn.getName());
+            vueJson.setKey(javaColumn.getColumnName());
             vueJson.setTitle(javaColumn.getNote());
             vueJson.setType(javaColumn.getIsPrimary() ? "selection" : "html");
             vueJson.setLength(javaColumn.getLength());

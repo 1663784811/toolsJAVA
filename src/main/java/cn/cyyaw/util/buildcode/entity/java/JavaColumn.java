@@ -7,7 +7,7 @@ import lombok.Data;
  */
 @Data
 public class JavaColumn {
-    private String name;                //字段名
+    private String columnName;                //字段名
     private String dbType;              //数据库字段类型
     private Integer length;             //长度
     private String javaType;            //java 类型
@@ -27,8 +27,6 @@ public class JavaColumn {
 
     private Boolean isUnique = false;   //是否是唯一
     private Boolean isIndex = false;   //是否是索引
-    private String tableName;   //表名
-    private String columnName;  //指向的列
     private String indexType;   //索引类型
 
 

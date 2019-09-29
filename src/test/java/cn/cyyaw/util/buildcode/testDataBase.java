@@ -33,18 +33,18 @@ public class testDataBase {
             List<JavaColumn> javaColumns = javaData.getJavaColumns();
             for (int j = 0; j < javaColumns.size(); j++) {
                 JavaColumn javaColumn = javaColumns.get(j);
-                System.out.println("==============");
-                System.out.println("=====字段名：" + javaColumn.getName());
-                System.out.println("=====注释：" + javaColumn.getNote());
-                System.out.println("=====数据库类型：" + javaColumn.getDbType());
-                System.out.println("=====java类型：" + javaColumn.getJavaType());
-                System.out.println("=====大小：" + javaColumn.getLength());
-                System.out.println("=====是否自增：" + javaColumn.getIsAutoIncrement());
-                System.out.println("=====是否是主键：" + javaColumn.getIsPrimary());
-                System.out.println("=====是否是外键：" + javaColumn.getIsFktable());
-                System.out.println("=====外键指向的表：" + javaColumn.getPkTableName());
-                System.out.println("=====外键指向的字段：" + javaColumn.getPkTableColumn());
-                System.out.println("==============");
+//                System.out.println("==============");
+//                System.out.println("=====字段名：" + javaColumn.getName());
+//                System.out.println("=====注释：" + javaColumn.getNote());
+//                System.out.println("=====数据库类型：" + javaColumn.getDbType());
+//                System.out.println("=====java类型：" + javaColumn.getJavaType());
+//                System.out.println("=====大小：" + javaColumn.getLength());
+//                System.out.println("=====是否自增：" + javaColumn.getIsAutoIncrement());
+//                System.out.println("=====是否是主键：" + javaColumn.getIsPrimary());
+//                System.out.println("=====是否是外键：" + javaColumn.getIsFktable());
+//                System.out.println("=====外键指向的表：" + javaColumn.getPkTableName());
+//                System.out.println("=====外键指向的字段：" + javaColumn.getPkTableColumn());
+//                System.out.println("==============");
             }
         }
     }
@@ -76,11 +76,11 @@ public class testDataBase {
     public void test03() throws SQLException, ClassNotFoundException {
         DataBase dataBase = new DataBase();
         System.out.println("外键列表====================================");
-        List<ForeignKey> t_admin = dataBase.getForeignKeys("t_role_power");
-        for (int i = 0; i < t_admin.size(); i++) {
-            System.out.println(t_admin.get(i).getPkTableName());
-            System.out.println(t_admin.get(i).getPkColumnName());
-            System.out.println(t_admin.get(i).getPkTableNote());
-        }
+//        List<ForeignKey> t_admin = dataBase.getForeignKeys("t_role_power");
+//        for (int i = 0; i < t_admin.size(); i++) {
+//            System.out.println(t_admin.get(i).getPkTableName());
+//            System.out.println(t_admin.get(i).getPkColumnName());
+////            System.out.println(t_admin.get(i).getPkTableNote());
+//        }
     }
 }
