@@ -1,10 +1,10 @@
-package ${basePackage}.admin.service.impl;
+package ${basePackage}.service.impl;
 
 import cn.cyyaw.jpa.BaseDao;
 import cn.cyyaw.jpa.BaseService;
-import ${basePackage}.admin.service.${operationTools.indexToUpperCase(tableName)}Service;
-import ${basePackage}.admin.table.entity.${operationTools.indexToUpperCase(tableName)};
-import ${basePackage}.admin.table.dao.${operationTools.indexToUpperCase(tableName)}Dao;
+import ${basePackage}.service.${operationTools.indexToUpperCase(tableName)}Service;
+import ${basePackage}.table.entity.${operationTools.indexToUpperCase(tableName)};
+import ${basePackage}.table.dao.${operationTools.indexToUpperCase(tableName)}Dao;
 
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;

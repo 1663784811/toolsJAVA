@@ -7,18 +7,7 @@ import lombok.Data;
  */
 @Data
 public class PrimaryKeys {
-
-    /**
-     * 表名
-     */
-    private String tableName;
-    /**
-     * 指向的主键列
-     */
-    private String columnName;
-
-    /**
-     * 主键名
-     */
-    private String primarykeyName;
+    private String tableName;  //表名
+    private String columnName;  //指向的主键列
+    private String primarykeyName;  //主键名
 }

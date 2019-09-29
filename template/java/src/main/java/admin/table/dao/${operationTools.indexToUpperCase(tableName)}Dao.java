@@ -1,7 +1,7 @@
-package ${basePackage}.admin.table.${operationTools.allToLowerCase(tableName)};
+package ${basePackage}.table.${operationTools.allToLowerCase(tableName)};
 
 import cn.cyyaw.jpa.BaseDao;
-import ${basePackage}.admin.table.entity.${operationTools.indexToUpperCase(tableName)};
+import ${basePackage}.table.entity.${operationTools.indexToUpperCase(tableName)};
 
 <#list javaColumns as column>
 <#if column.isFktable>

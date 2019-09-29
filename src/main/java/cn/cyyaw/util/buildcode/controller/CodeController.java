@@ -30,8 +30,8 @@ public class CodeController {
                 if ((table == null || table.trim().equals("")) || table.equals(javaData.getTable())) {
                     Map<String, Object> map = new HashMap();
                     //===========================================
-                    map.put("basePackage", "cn.cyyaw.weixin");
-                    map.put("basePathVue", "/admin");
+                    map.put("basePackage", "cn.cyyaw.weixin");          //基础包
+                    map.put("basePathVue", "/admin");                   //基础路径
 
                     //===========================================
                     map.put("tableName", javaData.getTable());    //数据表

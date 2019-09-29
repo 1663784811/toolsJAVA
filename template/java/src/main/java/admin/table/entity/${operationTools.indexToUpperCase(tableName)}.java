@@ -1,4 +1,4 @@
-package ${basePackage}.admin.table.entity;
+package ${basePackage}.table.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;

@@ -1,6 +1,6 @@
-package ${basePackage}.admin.service;
+package ${basePackage}.service;
 
-import ${basePackage}.admin.table.entity.${operationTools.indexToUpperCase(tableName)};
+import ${basePackage}.table.entity.${operationTools.indexToUpperCase(tableName)};
 import cn.cyyaw.jpa.BaseTableService;
 <#list javaColumns as column>
 <#if column.isFktable>

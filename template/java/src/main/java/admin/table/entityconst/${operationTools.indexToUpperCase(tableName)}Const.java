@@ -1,4 +1,4 @@
-package ${basePackage}.admin.table.entityconst;
+package ${basePackage}.table.entityconst;
 
 /**
  * 表常量
