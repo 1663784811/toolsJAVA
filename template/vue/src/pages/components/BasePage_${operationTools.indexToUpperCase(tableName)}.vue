@@ -16,6 +16,7 @@
                    :data="tableData"
                    :loading="tableLoading"
                    @on-selection-change="selectionChange"
+                   @on-sort-change="sortChangeFn"
                    highlight-row
             >
             </Table>
@@ -232,6 +233,11 @@
                     this.isDelLoading = false;
                     this.$Message.error("刪除失败," + errorData);
                 });
+            },
+            sortChangeFn: function (column) {
+                this.requestTableData.sort = column.key + "_" + column.order;
+                this.requestTableData.page = 1;
+                this.requestTableDataFn();
             }
         }
     }
