@@ -8,7 +8,7 @@ import java.util.List;<#break>
 </#if>
 </#list>
 
-public interface ${__table__}Service extends BaseTableService<${__table__}, ${__pkJava__}> {
+public interface ${__Table__}Service extends BaseTableService<${__table__}, ${__pkJava__}> {
 
 <#list javaColumns as column>
 <#if column.isFk>

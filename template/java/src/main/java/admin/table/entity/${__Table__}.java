@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Data
 @Entity
 @Table(name = "${__Table__}", catalog = "")
-public class ${__table__} implements Serializable{
+public class ${__Table__} implements Serializable{
     private static final long serialVersionUID = ${operationTools.getserialVersionUID()}L;
 <#-- ============================     字段列表     ======================== -->
 <#list javaColumns as column>

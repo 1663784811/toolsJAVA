@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;<#break>
 </#if>
 </#list>
 
-public interface ${__table__}Dao extends BaseDao<${__table__}, ${__pkJava__}> {
+public interface ${__Table__}Dao extends BaseDao<${__table__}, ${__pkJava__}> {
 
 <#list javaColumns as column>
 <#if column.isFk>
