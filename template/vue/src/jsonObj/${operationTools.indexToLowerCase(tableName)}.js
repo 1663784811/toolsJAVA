@@ -1,31 +1,30 @@
-import {EXPLAINFIELD,render} from "@/assets/common/js/global.js";
+import {EXPLAINFIELD,render,filterRemote} from "@/assets/common/js/global.js";
 
 let json ={
   "title": "${tableNote}",
   "fieldList": [
-
 <#list vueJsons as column>
     <#if column_index != 0 >,</#if>{
       <#if column.type == 'selection'>
-      "width":"60",
+      width:"60",
       </#if>
-      "key":"${column.key!}",
-      "title":"${column.title!}",
-      "type":"${column.type!}",
-      "length":"${(column.length!255)?c}",
-      "isRequire":${column.isRequire?string('true','false')},
-      "regStr":"${column.regStr!}",
-      "message":"${column.message!}",
-      "controlType":"${column.controlType!}",
+      key:"${column.key!}",
+      title:"${column.title!}",
+      type:"${column.type!}",
+      length:"${(column.length!255)?c}",
+      isRequire:${column.isRequire?string('true','false')},
+      regStr:"${column.regStr!}",
+      message":"${column.message!}",
+      controlType:"${column.controlType!}",
 <#if column.javaType == 'integer'>
-      "max":"${column.max!}",
-      "min":"${column.min!}",
+      max:"${column.max!}",
+      min:"${column.min!}",
 </#if>
-      "format":"${column.format!}",
-      "isShowColumn":${column.isShowColumn?string('true','false')},
-      "isWhere":${column.isWhere?string('true','false')},
-      "javaWhere":"${column.javaWhere!}",
-      "javaType":"${column.javaType!}"
+      format:"${column.format!}",
+      isShowColumn:${column.isShowColumn?string('true','false')},
+      isWhere:${column.isWhere?string('true','false')},
+      javaWhere:"${column.javaWhere!}",
+      javaType:"${column.javaType!}"
     }
 </#list>
   ]
