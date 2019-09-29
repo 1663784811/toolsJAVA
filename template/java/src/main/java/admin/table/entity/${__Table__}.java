@@ -11,8 +11,8 @@ import java.math.BigDecimal;
 
 @Data
 @Entity
-@Table(name = "${tableName}", catalog = "")
-public class ${operationTools.indexToUpperCase(tableName)} implements Serializable{
+@Table(name = "${__Table__}", catalog = "")
+public class ${__table__} implements Serializable{
     private static final long serialVersionUID = ${operationTools.getserialVersionUID()}L;
 <#-- ============================     字段列表     ======================== -->
 <#list javaColumns as column>
@@ -24,7 +24,7 @@ public class ${operationTools.indexToUpperCase(tableName)} implements Serializab
         </#if>
     </#if>
     <#-- ============================     是否是外键     ======================== -->
-    <#if column.isFktable>
+    <#if column.isFk>
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "${column.name}", referencedColumnName = "${column.pkTableColumn}")
     private ${operationTools.indexToUpperCase(column.pkTableName)} ${operationTools.indexToLowerCase(column.pkTableName)};

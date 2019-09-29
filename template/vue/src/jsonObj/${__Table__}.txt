@@ -1,7 +1,7 @@
 import {EXPLAINFIELD,render,filterRemote} from "@/assets/common/js/global.js";
 
 let json ={
-  "title": "${tableNote}",
+  "title": "${__Table__}",
   "fieldList": [
 <#list vueJsons as column>
     <#if column_index != 0 >,</#if>{

@@ -116,7 +116,7 @@
         },
         created() {
             //====   表头
-            this.ajaxGet("${tableName}_field.json", {}).then(responseData => {
+            this.ajaxGet("${__Table__}_field.json", {}).then(responseData => {
                 this.addTitle = responseData.title;
                 this.addFieldData = responseData.fieldList;
                 this.updateTitle = responseData.title;

@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 <#list javaColumns as column>
-<#if column.isFktable>
+<#if column.isFk>
 import java.util.List;<#break>
 </#if>
 </#list>
@@ -19,24 +19,24 @@ import java.util.List;<#break>
 @Service
 @Transactional
 @Log4j
-public class ${__Table__}ServiceImpl extends BaseService<${__Table__}, ${primarykeyJavaType}> implements ${__Table__}Service {
+public class ${__Table__}ServiceImpl extends BaseService<${__Table__}, ${__pkJava__}> implements ${__Table__}Service {
 
     @Autowired
-    private ${__Table__}Dao ${operationTools.indexToLowerCase(tableName)}Dao;
+    private ${__Table__}Dao ${__table__}Dao;
 
     @Override
     public BaseDao getBaseDao() {
-        return ${operationTools.indexToLowerCase(tableName)}Dao;
+        return ${__table__}Dao;
     }
 
 <#list javaColumns as column>
-<#if column.isFktable>
+<#if column.isFk>
     /**
      * 外键查询
      */
     @Override
     public List<${__Table__}> fk${__Table__}Find${operationTools.indexToUpperCase(column.pkTableName)}(${column.javaType} ${operationTools.indexToLowerCase(column.pkTableColumn)}){
-        return ${operationTools.indexToLowerCase(tableName)}Dao.fk${__Table__}Find${operationTools.indexToUpperCase(column.pkTableName)}(${operationTools.indexToLowerCase(column.pkTableColumn)});
+        return ${__table__}Dao.fk${__Table__}Find${operationTools.indexToUpperCase(column.pkTableName)}(${operationTools.indexToLowerCase(column.pkTableColumn)});
     }
 </#if>
 </#list>

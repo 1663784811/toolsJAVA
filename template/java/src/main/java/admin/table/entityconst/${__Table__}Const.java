@@ -4,12 +4,12 @@ package ${basePackage}.table.entityconst;
  * 表常量
  * 类命名：表名Const
  */
-public class ${operationTools.indexToUpperCase(tableName)}Const {
+public class ${__table__}Const {
 
     //允许查询列表
-    public final static String selectColumnArr[] = {<#list javaColumns as column ><#if !column.isFktable>"${operationTools.allToLowerCase(column.name)}"<#if column_index+1 lt javaColumns?size >,</#if></#if></#list>};
+    public final static String selectColumnArr[] = {<#list javaColumns as column ><#if !column.isFk>"${operationTools.allToLowerCase(column.name)}"<#if column_index+1 lt javaColumns?size >,</#if></#if></#list>};
     //允许查询条件
-    public final static String selectWhereArr[] = {<#list javaColumns as column ><#if !column.isFktable>"${operationTools.allToLowerCase(column.name)}"<#if column_index+1 lt javaColumns?size >,</#if></#if></#list>};
+    public final static String selectWhereArr[] = {<#list javaColumns as column ><#if !column.isFk>"${operationTools.allToLowerCase(column.name)}"<#if column_index+1 lt javaColumns?size >,</#if></#if></#list>};
     //允许更新字段
     public final static String updateColumnArr[] = {<#list javaColumns as column >"${operationTools.allToLowerCase(column.name)}"<#if column_index+1 lt javaColumns?size >,</#if></#list>};
     //允许删除条件

@@ -1,21 +1,21 @@
 package ${basePackage}.service;
 
-import ${basePackage}.table.entity.${operationTools.indexToUpperCase(tableName)};
+import ${basePackage}.table.entity.${__table__};
 import cn.cyyaw.jpa.BaseTableService;
 <#list javaColumns as column>
-<#if column.isFktable>
+<#if column.isFk>
 import java.util.List;<#break>
 </#if>
 </#list>
 
-public interface ${operationTools.indexToUpperCase(tableName)}Service extends BaseTableService<${operationTools.indexToUpperCase(tableName)}, ${primarykeyJavaType}> {
+public interface ${__table__}Service extends BaseTableService<${__table__}, ${__pkJava__}> {
 
 <#list javaColumns as column>
-<#if column.isFktable>
+<#if column.isFk>
     /**
      * 外键查询
      */
-    List<${operationTools.indexToUpperCase(tableName)}> fk${operationTools.indexToUpperCase(tableName)}Find${operationTools.indexToUpperCase(column.pkTableName)}(${column.javaType} ${operationTools.indexToLowerCase(column.pkTableColumn)});
+    List<${__table__}> fk${__table__}Find${operationTools.indexToUpperCase(column.pkTableName)}(${column.javaType} ${operationTools.indexToLowerCase(column.pkTableColumn)});
 </#if>
 </#list>
 
