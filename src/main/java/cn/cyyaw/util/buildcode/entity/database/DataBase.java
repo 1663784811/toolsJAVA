@@ -80,6 +80,22 @@ public class DataBase {
         //==== 获取外键
         List<ForeignKey> getForeignKeys = getForeignKeys(tableName);
         ResultSet columns = metaData.getColumns(connection.getCatalog(), "%", tableName, "%");
+
+        if (tableName.equals("g_order")) {
+            ResultSet indexInfo = metaData.getIndexInfo(connection.getCatalog(), "%", tableName, false, false);
+            int n = 1;
+            while (indexInfo.next()) {
+                String index_name = indexInfo.getString("INDEX_NAME");
+                String unique = indexInfo.getString("NON_UNIQUE");
+                String table_cat = indexInfo.getString("TABLE_CAT");
+                String column_name = indexInfo.getString("column_name");
+                System.out.println(column_name);
+                n++;
+
+            }
+        }
+
+
         while (columns.next()) {
             JavaColumn javaColumn = new JavaColumn();
             //=================
@@ -87,10 +103,14 @@ public class DataBase {
             javaColumn.setNote(columns.getString("REMARKS"));//注释
             javaColumn.setLength(columns.getInt("COLUMN_SIZE"));//长度
             String type = columns.getString("TYPE_NAME");
-            javaColumn.setDbType(type);
+            javaColumn.setDbType(type);    //   数据库类型
             javaColumn.setJavaType(TypeTools.dbType2JavaType(type));
             javaColumn.setIsAutoIncrement(columns.getString("IS_AUTOINCREMENT").equals("YES"));//是否自增加
             javaColumn.setDefaultValue(columns.getString("COLUMN_DEF"));//默认值
+
+            String string = columns.getString("ORDINAL_POSITION");
+
+
             for (int i = 0; i < getPrimaryKeys.size(); i++) {
                 if (javaColumn.getName().equals(getPrimaryKeys.get(i).getColumnName())) {
                     javaColumn.setIsPrimary(true);

@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class JavaColumn {
     private String name;  //字段名
-    private String dbType; //数据库类型
+    private String dbType; //数据库字段类型
     private Integer length;  //长度
     private String javaType; //java 类型
     private String defaultValue; //默认值
