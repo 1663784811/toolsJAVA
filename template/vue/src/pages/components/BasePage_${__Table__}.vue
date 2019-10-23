@@ -67,13 +67,13 @@
         updateFieldDataJson,
         TableHeaderJson,
         searchWhereJson
-    } from "@${basePathVue}/config/jsonObj/${operationTools.indexToLowerCase(tableName)}";
+    } from "@${basePathVue}/config/jsonObj/${__Table__}";
 
     import {
         API_findPage${operationTools.indexToUpperCase(tableName)},
         API_del${operationTools.indexToUpperCase(tableName)},
         API_save${operationTools.indexToUpperCase(tableName)}
-    } from "@${basePathVue}/config/api/${operationTools.indexToLowerCase(tableName)}";
+    } from "@${basePathVue}/config/api/${__Table__}";
 
 
     export default {

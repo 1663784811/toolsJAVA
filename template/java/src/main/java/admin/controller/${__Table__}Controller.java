@@ -123,9 +123,10 @@ public class ${__Table__}Controller {
     public void save${__Table__}(HttpServletResponse response,@RequestBody ${__Table__} ${__table__}) {
         ${__Table__} obj = null;
         //添加
-        ${__pkJava__} id = ${__table__}.get${operationTools.indexToUpperCase( primarykey )}();
+        ${__pkJava__} id = ${__table__}.get${operationTools.indexToUpperCase( __Pk__ )}();
         if (null == id) {
             //添加
+            log.info("添加:{}", ${__table__});
             WhyBeanUtils.filterField(${__table__}, ${__Table__}Const.filteraddColumnArr);
 <#list javaColumns as column>
         <#if column.columnName == 'tid' >
@@ -138,6 +139,7 @@ public class ${__Table__}Controller {
             obj = ${__table__}Service.save(${__table__});
         } else {
             //修改
+            log.info("修改:{}", ${__table__});
             ${__Table__} ${__table__}1 = ${__table__}Service.findId(${__pk__});
             Assert.notNull(${__table__}1, "操作失败！");
             WhyBeanUtils.filterField(${__table__}, ${__Table__}Const.filteraddColumnArr);

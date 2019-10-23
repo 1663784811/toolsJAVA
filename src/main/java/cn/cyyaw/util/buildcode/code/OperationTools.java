@@ -65,7 +65,7 @@ public class OperationTools {
             } else if (dbType.equals("varchar")) {
                 return ", columnDefinition = \"" + dbType + "(" + javaColumn.getLength() + ")" + dbTypeComment(javaColumn) + "\"";
             } else if (dbType.equals("decimal")) {
-                return ", columnDefinition = \"" + dbType + "(" + javaColumn.getLength() + "，2 )" + dbTypeComment(javaColumn) + "\"";
+                return ", columnDefinition = \"" + dbType + "(" + javaColumn.getLength() + ",2 )" + dbTypeComment(javaColumn) + "\"";
             }
         }
         return "";

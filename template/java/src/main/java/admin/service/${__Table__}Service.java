@@ -1,6 +1,6 @@
 package ${basePackage}.service;
 
-import ${basePackage}.table.entity.${__table__};
+import ${basePackage}.table.entity.${__Table__};
 import cn.cyyaw.jpa.BaseTableService;
 <#list javaColumns as column>
 <#if column.isFk>
@@ -8,7 +8,7 @@ import java.util.List;<#break>
 </#if>
 </#list>
 
-public interface ${__Table__}Service extends BaseTableService<${__table__}, ${__pkJava__}> {
+public interface ${__Table__}Service extends BaseTableService<${__Table__}, ${__pkJava__}> {
 
 <#list javaColumns as column>
 <#if column.isFk>

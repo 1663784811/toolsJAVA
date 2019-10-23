@@ -1,7 +1,7 @@
-package ${basePackage}.table.${operationTools.allToLowerCase(tableName)};
+package ${basePackage}.table;
 
 import cn.cyyaw.jpa.BaseDao;
-import ${basePackage}.table.entity.${__table__};
+import ${basePackage}.table.entity.${__Table__};
 
 <#list javaColumns as column>
 <#if column.isFk>
@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;<#break>
 </#if>
 </#list>
 
-public interface ${__Table__}Dao extends BaseDao<${__table__}, ${__pkJava__}> {
+public interface ${__Table__}Dao extends BaseDao<${__Table__}, ${__pkJava__}> {
 
 <#list javaColumns as column>
 <#if column.isFk>

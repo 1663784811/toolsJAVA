@@ -29,10 +29,10 @@ public class CodeController {
             for (int i = 0; i < tableList.size(); i++) {
                 JavaData javaData = tableList.get(i);
                 List<JavaColumn> javaColumns = javaData.getJavaColumns();
-                if (table.equals(javaData.getTable())) {
+                if (table==null || table.equals(javaData.getTable())) {
                     Map<String, Object> map = new HashMap();
                     //===========================================
-                    map.put("basePackage", "cn.cyyaw.weixin");          //基础包
+                    map.put("basePackage", "cn.cyyaw.flysandy.admin");          //基础包
                     map.put("basePathVue", "/admin");                   //基础路径
                     //===========================================
                     map.put("javaData", javaData);                        //数据表信息
@@ -51,8 +51,6 @@ public class CodeController {
                     map.put("__pkJava__", operationTools.getPK(javaColumns).getJavaType());// 主键java首字母大写
 
                     //===========================================  常用变量
-
-
                     createCode.setDataMap(map);
                     System.out.println("正在生成文件。。。:" + tableList.get(i).getTableNote());
                     if (createCode.out()) {

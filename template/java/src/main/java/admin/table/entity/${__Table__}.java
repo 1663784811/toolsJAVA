@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 
 @Data
 @Entity
-@Table(name = "${__Table__}", catalog = "")
+@Table(name = "${javaData.table}", catalog = "")
 public class ${__Table__} implements Serializable{
     private static final long serialVersionUID = ${operationTools.getserialVersionUID()}L;
 <#-- ============================     字段列表     ======================== -->
@@ -36,7 +36,7 @@ public class ${__Table__} implements Serializable{
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     </#if>
-    private ${column.javaType} ${operationTools.indexToLowerCase(column.name)};
+    private ${column.javaType} ${operationTools.indexToLowerCase(column.columnName)};
     </#if>
 </#list>
 }

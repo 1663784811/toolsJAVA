@@ -6,7 +6,7 @@ import ${basePackage}.service.${__Table__}Service;
 import ${basePackage}.table.entity.${__Table__};
 import ${basePackage}.table.dao.${__Table__}Dao;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +18,7 @@ import java.util.List;<#break>
 
 @Service
 @Transactional
-@Log4j
+@Slf4j
 public class ${__Table__}ServiceImpl extends BaseService<${__Table__}, ${__pkJava__}> implements ${__Table__}Service {
 
     @Autowired
