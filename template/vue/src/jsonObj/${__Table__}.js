@@ -23,7 +23,7 @@ let json ={
 <#if (!(column.message)??)>
     message:"${column.message!}",
 </#if>
-<#if (!(column.controlType)??)>
+<#if ((column.controlType)??)>
     controlType:"${column.controlType!}",
 </#if>
 <#if column.javaType == 'integer'>

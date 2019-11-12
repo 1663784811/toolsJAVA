@@ -70,14 +70,14 @@
     } from "@${basePathVue}/config/jsonObj/${__Table__}";
 
     import {
-        API_findPage${operationTools.indexToUpperCase(tableName)},
-        API_del${operationTools.indexToUpperCase(tableName)},
-        API_save${operationTools.indexToUpperCase(tableName)}
+        API_findPage${__Table__},
+        API_del${__Table__},
+        API_save${__Table__}
     } from "@${basePathVue}/config/api/${__Table__}";
 
 
     export default {
-        name: "BasePage_${operationTools.indexToUpperCase(tableName)}",
+        name: "BasePage_${__Table__}",
         components: {
             BaseOperation,
             BaseWindow
@@ -103,7 +103,7 @@
                     page: 1,
                     size: 30,
                     total:0,
-                    sort: "${operationTools.allToLowerCase(primarykey)}_desc"
+                    sort: "id_desc"
                 },
                 submitData: {},//添加修改提交数据,
                 //=====================================================     响应数据
@@ -198,7 +198,7 @@
                 this.tableData = [];
                 this.selectData = [];
                 this.tableLoading = true;
-                API_findPage${operationTools.indexToUpperCase(tableName)}(this.requestTableData).then(res => {
+                API_findPage${__Table__}(this.requestTableData).then(res => {
                     this.requestTableData.page = res.page;
                     this.requestTableData.size = res.size;
                     this.requestTableData.total = res.total;
@@ -211,7 +211,7 @@
             },
             submitDataFn: function () {
                 this.winLoadding = true;
-                API_save${operationTools.indexToUpperCase(tableName)}(this.submitData).then(() => {
+                API_save${__Table__}(this.submitData).then(() => {
                     this.winShow = false;
                     this.winLoadding = false;
                     this.$Message.success("保存成功");
@@ -224,7 +224,7 @@
             },
             //根ID删除数据
             delIdFn: function (sendObj) {
-                API_del${operationTools.indexToUpperCase(tableName)}(sendObj).then(responseData => {
+                API_del${__Table__}(sendObj).then(responseData => {
                     this.$Message.success(responseData.message);
                     this.isDelInfo = false;
                     this.isDelLoading = false;

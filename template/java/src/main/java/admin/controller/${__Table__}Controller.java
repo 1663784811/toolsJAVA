@@ -5,7 +5,7 @@ import ${basePackage}.table.entity.${__Table__};
 import ${basePackage}.table.entityconst.${__Table__}Const;
 
 import cn.cyyaw.jpa.BaseConstants;
-import cn.cyyaw.util.entity.SelectModel;
+import cn.cyyaw.util.entity.SelectEntity;
 import cn.cyyaw.util.tools.*;
 
 <#list javaColumns as column>
@@ -91,8 +91,8 @@ public class ${__Table__}Controller {
      * 表:${javaData.table} ===> 所有:带条件
      */
     @RequestMapping(value = "/findAll${__Table__}", method = RequestMethod.GET)
-    public void findAll${__Table__}(HttpServletResponse response, String jsonStr, SelectModel selectModel) {
-        List<${__Table__}> list = ${__table__}Service.findAll(jsonStr, selectModel);
+    public void findAll${__Table__}(HttpServletResponse response, String jsonStr, SelectEntity selectEntity) {
+        List<${__Table__}> list = ${__table__}Service.findAll(jsonStr, selectEntity);
         ResponseUtils.responseJsonFilter(response, list,${__Table__}Const.filterselectColumnArr);
     }
 
@@ -100,8 +100,8 @@ public class ${__Table__}Controller {
      * 分页条件查询
      */
     @RequestMapping(value = "/findPage${__Table__}", method = RequestMethod.GET)
-    public void findPage${__Table__}(HttpServletResponse response,String jsonStr,  SelectModel selectModel) {
-        PageRequest pageRequest = JpaUtils.getPageRequest(selectModel);
+    public void findPage${__Table__}(HttpServletResponse response,String jsonStr,  SelectEntity selectEntity) {
+        PageRequest pageRequest = JpaUtils.getPageRequest(selectEntity);
         Page<${__Table__}> page = ${__table__}Service.findPage(jsonStr, pageRequest);
         ResponseUtils.responseJsonFilter(response, PageUtil.pageFormat(page),${__Table__}Const.filterselectColumnArr);
     }
