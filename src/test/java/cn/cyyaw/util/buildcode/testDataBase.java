@@ -1,7 +1,6 @@
 package cn.cyyaw.util.buildcode;
 
-import cn.cyyaw.util.buildcode.entity.database.DataBase;
-import cn.cyyaw.util.buildcode.entity.java.ForeignKey;
+import cn.cyyaw.util.buildcode.database.DataBase;
 import cn.cyyaw.util.buildcode.entity.java.JavaColumn;
 import cn.cyyaw.util.buildcode.entity.java.JavaData;
 import cn.cyyaw.util.buildcode.entity.java.PrimaryKeys;

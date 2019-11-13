@@ -4,7 +4,7 @@ import cn.cyyaw.util.buildcode.code.CreateCode;
 import cn.cyyaw.util.buildcode.code.InterfaceToos;
 import cn.cyyaw.util.buildcode.code.OperationTools;
 import cn.cyyaw.util.buildcode.code.TypeTools;
-import cn.cyyaw.util.buildcode.entity.database.DataBase;
+import cn.cyyaw.util.buildcode.database.DataBase;
 import cn.cyyaw.util.buildcode.entity.java.JavaColumn;
 import cn.cyyaw.util.buildcode.entity.java.JavaData;
 

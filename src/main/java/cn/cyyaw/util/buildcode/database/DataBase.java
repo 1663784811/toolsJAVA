@@ -1,4 +1,4 @@
-package cn.cyyaw.util.buildcode.entity.database;
+package cn.cyyaw.util.buildcode.database;
 
 
 import cn.cyyaw.util.buildcode.code.TypeTools;

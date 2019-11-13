@@ -108,7 +108,7 @@
                 submitData: {},//添加修改提交数据,
                 //=====================================================     响应数据
                 //==========表格START
-                tableLoading: true,
+                tableLoading: false,
                 tableData: [],      //数据
                 selectData: [],      //已经选择的数据
                 //==========表格END
