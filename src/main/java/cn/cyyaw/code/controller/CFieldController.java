@@ -1,8 +1,8 @@
-package cn.cyyaw.config.controller;
+package cn.cyyaw.code.controller;
 
-import cn.cyyaw.config.service.CTableService;
-import cn.cyyaw.config.table.entity.CTable;
-import cn.cyyaw.config.table.entityconst.CTableConst;
+import cn.cyyaw.code.service.CFieldService;
+import cn.cyyaw.code.table.entity.CField;
+import cn.cyyaw.code.table.entityconst.CFieldConst;
 
 import cn.cyyaw.jpa.BaseConstants;
 import cn.cyyaw.util.entity.SelectEntity;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
-import java.util.Date;
 
 /**
  * <pre>
@@ -76,71 +75,71 @@ import java.util.Date;
 @Slf4j
 @RequestMapping("/admin")
 @RestController
-public class CTableController {
+public class CFieldController {
 
     @Autowired
-    private CTableService cTableService;
+    private CFieldService cFieldService;
 
     /**
-     * 表:c_table ===> 所有:带条件
+     * 表:c_field ===> 所有:带条件
      */
-    @RequestMapping(value = "/findAllCTable", method = RequestMethod.GET)
-    public void findAllCTable(HttpServletResponse response, String jsonStr, SelectEntity selectEntity) {
-        List<CTable> list = cTableService.findAll(jsonStr, selectEntity);
-        ResponseUtils.responseJsonFilter(response, list,CTableConst.filterselectColumnArr);
+    @RequestMapping(value = "/findAllCField", method = RequestMethod.GET)
+    public void findAllCField(HttpServletResponse response, String jsonStr, SelectEntity selectEntity) {
+        List<CField> list = cFieldService.findAll(jsonStr, selectEntity);
+        ResponseUtils.responseJsonFilter(response, list,CFieldConst.filterselectColumnArr);
     }
 
     /**
      * 分页条件查询
      */
-    @RequestMapping(value = "/findPageCTable", method = RequestMethod.GET)
-    public void findPageCTable(HttpServletResponse response,String jsonStr,  SelectEntity selectEntity) {
+    @RequestMapping(value = "/findPageCField", method = RequestMethod.GET)
+    public void findPageCField(HttpServletResponse response,String jsonStr,  SelectEntity selectEntity) {
         PageRequest pageRequest = JpaUtils.getPageRequest(selectEntity);
-        Page<CTable> page = cTableService.findPage(jsonStr, pageRequest);
-        ResponseUtils.responseJsonFilter(response, PageUtil.pageFormat(page),CTableConst.filterselectColumnArr);
+        Page<CField> page = cFieldService.findPage(jsonStr, pageRequest);
+        ResponseUtils.responseJsonFilter(response, PageUtil.pageFormat(page),CFieldConst.filterselectColumnArr);
     }
 
     /**
      * 根据ID查询
      */
-    @RequestMapping(value = "/findIdCTable", method = RequestMethod.GET)
-    public void findIdCTable(HttpServletResponse response,@RequestParam Integer id) {
-        CTable obj = cTableService.findId(id);
-        ResponseUtils.responseJsonFilter(response, obj,CTableConst.filterselectColumnArr);
+    @RequestMapping(value = "/findIdCField", method = RequestMethod.GET)
+    public void findIdCField(HttpServletResponse response,@RequestParam Integer id) {
+        CField obj = cFieldService.findId(id);
+        ResponseUtils.responseJsonFilter(response, obj,CFieldConst.filterselectColumnArr);
     }
 
 
     /**
      * 添加或修改
      */
-    @PostMapping(value = "/saveCTable")
-    public void saveCTable(HttpServletResponse response,@RequestBody CTable cTable) {
-        CTable obj = null;
+    @PostMapping(value = "/saveCField")
+    public void saveCField(HttpServletResponse response,@RequestBody CField cField) {
+        CField obj = null;
         //添加
-        Integer id = cTable.getId();
+        Integer id = cField.getId();
         if (null == id) {
             //添加
-            log.info("添加:{}", cTable);
-            WhyBeanUtils.filterField(cTable, CTableConst.filteraddColumnArr);
-            cTable.setTid(WhyStringUtil.getUUID());
-            obj = cTableService.save(cTable);
+            log.info("添加:{}", cField);
+            WhyBeanUtils.filterField(cField, CFieldConst.filteraddColumnArr);
+            cField.setTid(WhyStringUtil.getUUID());
+            obj = cFieldService.save(cField);
         } else {
             //修改
-            log.info("修改:{}", cTable);
-            CTable cTable1 = cTableService.findId(id);
-            Assert.notNull(cTable1, "操作失败！");
-            WhyBeanUtils.filterField(cTable, CTableConst.filteraddColumnArr);
-            obj = cTableService.save(cTable);
+            log.info("修改:{}", cField);
+            CField cField1 = cFieldService.findId(id);
+            Assert.notNull(cField1, "操作失败！");
+            WhyBeanUtils.filterField(cField, CFieldConst.filteraddColumnArr);
+            obj = cFieldService.save(cField);
         }
-        ResponseUtils.responseJsonFilter(response, obj,CTableConst.filterselectColumnArr);
+        ResponseUtils.responseJsonFilter(response, obj,CFieldConst.filterselectColumnArr);
     }
 
     /**
      * 删除
      */
-    @RequestMapping(value = "/delCTable")
-    public Map delCTable( @RequestBody Integer idArr[]) {
-        cTableService.del(idArr);
+    @RequestMapping(value = "/delCField")
+    public Map delCField( @RequestBody Integer idArr[]) {
+        cFieldService.del(idArr);
         return BaseConstants.tableDelSuccess;
     }
 

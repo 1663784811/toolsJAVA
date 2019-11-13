@@ -1,13 +1,8 @@
-package cn.cyyaw.config.table.entity;
+package cn.cyyaw.code.table.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
-import java.math.BigDecimal;
 
 @Data
 @Entity

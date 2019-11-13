@@ -1,10 +1,10 @@
-package cn.cyyaw.config.service.impl;
+package cn.cyyaw.code.service.impl;
 
 import cn.cyyaw.jpa.BaseDao;
 import cn.cyyaw.jpa.BaseService;
-import cn.cyyaw.config.service.CTableService;
-import cn.cyyaw.config.table.entity.CTable;
-import cn.cyyaw.config.table.dao.CTableDao;
+import cn.cyyaw.code.service.CInterfaceService;
+import cn.cyyaw.code.table.entity.CInterface;
+import cn.cyyaw.code.table.dao.CInterfaceDao;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Slf4j
-public class CTableServiceImpl extends BaseService<CTable, Integer> implements CTableService {
+public class CInterfaceServiceImpl extends BaseService<CInterface, Integer> implements CInterfaceService {
 
     @Autowired
-    private CTableDao cTableDao;
+    private CInterfaceDao cInterfaceDao;
 
     @Override
     public BaseDao getBaseDao() {
-        return cTableDao;
+        return cInterfaceDao;
     }
 
 }

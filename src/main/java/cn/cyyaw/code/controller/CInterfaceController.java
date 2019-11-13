@@ -1,8 +1,8 @@
-package cn.cyyaw.config.controller;
+package cn.cyyaw.code.controller;
 
-import cn.cyyaw.config.service.CInterfaceService;
-import cn.cyyaw.config.table.entity.CInterface;
-import cn.cyyaw.config.table.entityconst.CInterfaceConst;
+import cn.cyyaw.code.service.CInterfaceService;
+import cn.cyyaw.code.table.entity.CInterface;
+import cn.cyyaw.code.table.entityconst.CInterfaceConst;
 
 import cn.cyyaw.jpa.BaseConstants;
 import cn.cyyaw.util.entity.SelectEntity;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
-import java.util.Date;
 
 /**
  * <pre>
