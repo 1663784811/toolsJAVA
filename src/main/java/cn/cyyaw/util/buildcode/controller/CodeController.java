@@ -32,8 +32,8 @@ public class CodeController {
                 if (table==null || table.equals(javaData.getTable())) {
                     Map<String, Object> map = new HashMap();
                     //===========================================
-                    map.put("basePackage", "cn.cyyaw.flysandy.admin");          //基础包
-                    map.put("basePathVue", "/admin");                   //基础路径
+                    map.put("basePackage", "cn.cyyaw.config");          //基础包
+                    map.put("basePathVue", "");                   //基础路径
                     //===========================================
                     map.put("javaData", javaData);                        //数据表信息
                     map.put("javaColumns", javaColumns);    //数据字段列表

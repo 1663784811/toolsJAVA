@@ -1,4 +1,4 @@
-package ${basePackage}.table;
+package ${basePackage}.table.dao;
 
 import cn.cyyaw.jpa.BaseDao;
 import ${basePackage}.table.entity.${__Table__};
