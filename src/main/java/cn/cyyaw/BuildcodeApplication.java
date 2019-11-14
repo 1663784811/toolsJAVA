@@ -12,9 +12,4 @@ public class BuildcodeApplication {
         SpringApplication.run(BuildcodeApplication.class, args);
     }
 
-
-    public void aa(HttpServletRequest request){
-
-    }
-
 }
