@@ -5,4 +5,18 @@ server:
 spring:
   profiles:
     active: dev
-#        active: prod
+    #active: prod
+  main:
+    allow-bean-definition-overriding: true
+
+
+
+
+
+ftp:
+  hostname: 127.0.0.1
+  port: 21
+  username: root
+  password: because
+  directory: /root
+

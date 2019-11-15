@@ -1,7 +1,6 @@
 package cn.cyyaw.util.buildcode.code;
 
 
-
 import cn.cyyaw.util.buildcode.entity.java.JavaColumn;
 import cn.cyyaw.util.buildcode.entity.vue.VueJson;
 
@@ -51,7 +50,7 @@ public class TypeTools {
         ) {
             //============= 数值字符
             objType = "String";
-        }else if (type.equals("DECIMAL") || type.equals("decimal")) {
+        } else if (type.equals("DECIMAL") || type.equals("decimal")) {
             //============= 数值字符
             objType = "BigDecimal";
         }
