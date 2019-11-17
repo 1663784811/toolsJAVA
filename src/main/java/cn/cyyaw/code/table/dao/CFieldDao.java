@@ -14,4 +14,8 @@ public interface CFieldDao extends BaseDao<CField, Integer> {
 
     @Query("select m from  CField m where m.ctableid=?1 and m.columnname=?2")
     List<CField> findByCtableidAndColumnname(String ctableid, String columnName);
+
+    @Query("select m from CField m where m.ctableid =?1")
+    List<CField> findByCtableid(String ctableid);
+
 }

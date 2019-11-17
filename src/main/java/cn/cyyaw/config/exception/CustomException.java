@@ -9,6 +9,7 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 
 public class CustomException implements HandlerExceptionResolver {
     @Override
@@ -29,6 +30,9 @@ public class CustomException implements HandlerExceptionResolver {
             WhyException whyException = (WhyException) ex;
             mav.addObject("code", whyException.getCode());
             mav.addObject("message", whyException.getMessage());
+        } else if (ex instanceof SQLException) {
+            mav.addObject("code", 500);
+            mav.addObject("message", ex.getMessage());
         } else {
             mav.addObject("code", 500);
             mav.addObject("message", "系统异常");
