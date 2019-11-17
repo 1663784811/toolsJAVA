@@ -1,6 +1,7 @@
 package cn.cyyaw.code.controller;
 
 import cn.cyyaw.code.service.CFieldService;
+import cn.cyyaw.code.table.dao.CTableDao;
 import cn.cyyaw.code.table.entity.CField;
 import cn.cyyaw.code.table.entityconst.CFieldConst;
 
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
@@ -86,26 +88,26 @@ public class CFieldController {
     @RequestMapping(value = "/findAllCField", method = RequestMethod.GET)
     public void findAllCField(HttpServletResponse response, String jsonStr, SelectEntity selectEntity) {
         List<CField> list = cFieldService.findAll(jsonStr, selectEntity);
-        ResponseUtils.responseJsonFilter(response, list,CFieldConst.filterselectColumnArr);
+        ResponseUtils.responseJsonFilter(response, list, CFieldConst.filterselectColumnArr);
     }
 
     /**
      * 分页条件查询
      */
     @RequestMapping(value = "/findPageCField", method = RequestMethod.GET)
-    public void findPageCField(HttpServletResponse response,String jsonStr,  SelectEntity selectEntity) {
+    public void findPageCField(HttpServletResponse response, String jsonStr, SelectEntity selectEntity) {
         PageRequest pageRequest = JpaUtils.getPageRequest(selectEntity);
         Page<CField> page = cFieldService.findPage(jsonStr, pageRequest);
-        ResponseUtils.responseJsonFilter(response, PageUtil.pageFormat(page),CFieldConst.filterselectColumnArr);
+        ResponseUtils.responseJsonFilter(response, PageUtil.pageFormat(page), CFieldConst.filterselectColumnArr);
     }
 
     /**
      * 根据ID查询
      */
     @RequestMapping(value = "/findIdCField", method = RequestMethod.GET)
-    public void findIdCField(HttpServletResponse response,@RequestParam Integer id) {
+    public void findIdCField(HttpServletResponse response, @RequestParam Integer id) {
         CField obj = cFieldService.findId(id);
-        ResponseUtils.responseJsonFilter(response, obj,CFieldConst.filterselectColumnArr);
+        ResponseUtils.responseJsonFilter(response, obj, CFieldConst.filterselectColumnArr);
     }
 
 
@@ -113,7 +115,7 @@ public class CFieldController {
      * 添加或修改
      */
     @PostMapping(value = "/saveCField")
-    public void saveCField(HttpServletResponse response,@RequestBody CField cField) {
+    public void saveCField(HttpServletResponse response, @RequestBody CField cField) {
         CField obj = null;
         //添加
         Integer id = cField.getId();
@@ -131,16 +133,15 @@ public class CFieldController {
             WhyBeanUtils.filterField(cField, CFieldConst.filteraddColumnArr);
             obj = cFieldService.save(cField);
         }
-        ResponseUtils.responseJsonFilter(response, obj,CFieldConst.filterselectColumnArr);
+        ResponseUtils.responseJsonFilter(response, obj, CFieldConst.filterselectColumnArr);
     }
 
     /**
      * 删除
      */
     @RequestMapping(value = "/delCField")
-    public Map delCField( @RequestBody Integer idArr[]) {
+    public Map delCField(@RequestBody Integer idArr[]) {
         cFieldService.del(idArr);
         return BaseConstants.tableDelSuccess;
     }
-
 }

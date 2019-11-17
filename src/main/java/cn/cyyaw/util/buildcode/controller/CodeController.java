@@ -7,6 +7,7 @@ import cn.cyyaw.util.buildcode.code.TypeTools;
 import cn.cyyaw.util.buildcode.database.DataBase;
 import cn.cyyaw.util.buildcode.entity.java.JavaColumn;
 import cn.cyyaw.util.buildcode.entity.java.JavaData;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -14,7 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+
 public class CodeController {
+
+
+
 
     public void buildCode(String url, String user, String pwd, String table) throws SQLException, ClassNotFoundException, IOException {
         CreateCode createCode = new CreateCode("template", "I:\\ab");
@@ -29,7 +35,7 @@ public class CodeController {
             for (int i = 0; i < tableList.size(); i++) {
                 JavaData javaData = tableList.get(i);
                 List<JavaColumn> javaColumns = javaData.getJavaColumns();
-                if (table==null || table.equals(javaData.getTable())) {
+                if (table == null || table.equals(javaData.getTable())) {
                     Map<String, Object> map = new HashMap();
                     //===========================================
                     map.put("basePackage", "cn.cyyaw.config");          //基础包
