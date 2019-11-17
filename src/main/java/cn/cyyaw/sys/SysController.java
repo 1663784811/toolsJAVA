@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,4 +112,36 @@ public class SysController {
         return BaseConstants.statusMessage(true, "生成代码成功！");
         //下载
     }
+
+
+    @RequestMapping("/downloadFile")
+    public void downloadFile(HttpServletResponse response, String name) throws IOException {
+        File file = new File(name);
+        //如果文件不存在
+//        if (!file.exists()) {
+//            request.setAttribute("message", "您要下载的资源已被删除！！");
+//            request.setAttribute("flag", "1");
+//            return MANAGER_APK_DECOMPILE_UPDATE_URL;
+//        }
+        // 取得文件名。
+        String filename = file.getName();
+        // 取得文件的后缀名。
+        String ext = filename.substring(filename.lastIndexOf(".") + 1).toUpperCase();
+        // 以流的形式下载文件。
+        InputStream fis = new BufferedInputStream(new FileInputStream(file));
+        byte[] buffer = new byte[fis.available()];
+        fis.read(buffer);
+        fis.close();
+        // 清空response
+        response.reset();
+        // 设置response的Header
+        response.addHeader("Content-Disposition", "attachment;filename=" + new String(filename.getBytes()));
+        response.addHeader("Content-Length", "" + file.length());
+        OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
+        response.setContentType("application/octet-stream");
+        toClient.write(buffer);
+        toClient.flush();
+        toClient.close();
+    }
+
 }
