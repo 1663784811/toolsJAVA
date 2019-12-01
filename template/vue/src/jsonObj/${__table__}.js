@@ -1,7 +1,7 @@
 import {EXPLAINFIELD,render,filterRemote} from "@/assets/common/js/global.js";
 
 let json ={
-    "title": "${__Table__}",
+    "title": "${javaData.tableNote!}",
     "fieldList": [
         <#list vueJsons as column>
 <#if column_index != 0 >,</#if>{
@@ -13,7 +13,7 @@ let json ={
 <#if column.type != 'html'>
     type:"${column.type!}",
 </#if>
-    length:"${(column.length!255)?c}",
+    length:${(column.length!255)?c},
 <#if column.isRequire>
     isRequire:${column.isRequire?string('true','false')},
 </#if>

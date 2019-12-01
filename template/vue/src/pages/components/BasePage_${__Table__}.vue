@@ -67,13 +67,13 @@
         updateFieldDataJson,
         TableHeaderJson,
         searchWhereJson
-    } from "@${basePathVue}/config/jsonObj/${__Table__}";
+    } from "@${basePathVue}/config/jsonObj/${__table__}";
 
     import {
         API_findPage${__Table__},
         API_del${__Table__},
         API_save${__Table__}
-    } from "@${basePathVue}/config/api/${__Table__}";
+    } from "@${basePathVue}/config/api/${__table__}";
 
 
     export default {
