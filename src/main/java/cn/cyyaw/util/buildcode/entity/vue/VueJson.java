@@ -2,6 +2,8 @@ package cn.cyyaw.util.buildcode.entity.vue;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * vue JSON 文件实体
  */
@@ -22,4 +24,5 @@ public class VueJson {
     private Boolean isShowColumn = true;//是否显示列表
     private String javaWhere;           //java条件
     private String javaType;            //java类型
+    private List<Filters> filters;      //过滤
 }

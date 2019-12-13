@@ -2,6 +2,7 @@ package cn.cyyaw.util.buildcode.code;
 
 
 import cn.cyyaw.util.buildcode.entity.java.JavaColumn;
+import cn.cyyaw.util.buildcode.entity.vue.Filters;
 import cn.cyyaw.util.buildcode.entity.vue.VueJson;
 
 import java.util.ArrayList;
@@ -172,9 +173,36 @@ public class TypeTools {
     public static VueJson javaColumn2VueJson(JavaColumn javaColumn) {
         VueJson vueJson = new VueJson();
         if (null != javaColumn) {
-            vueJson.setKey(javaColumn.getColumnName());
-            vueJson.setTitle(javaColumn.getNote());
-            vueJson.setType(javaColumn.getIsPrimary() ? "selection" : "html");
+            vueJson.setKey(javaColumn.getColumnName()); //key
+
+            String note = javaColumn.getNote();
+            List filters = new ArrayList<Filters>();
+            if (null != note) {
+                try {
+                    int start = note.indexOf("{");
+                    int end = note.indexOf("}");
+                    if (start != -1 && end != -1) {
+                        String tempstr = note.substring(start + 1, end );
+                        String[] splitstr = tempstr.split(",");
+                        for (int i = 0; i < splitstr.length; i++) {
+                            Filters f = new Filters();
+                            System.out.println(splitstr[i]);
+                            String[] jsonstr = splitstr[i].split(":");
+                            if (jsonstr.length == 2) {
+                                f.setValue(jsonstr[0]);
+                                f.setLabel(jsonstr[1]);
+                                filters.add(f);
+                            }
+                        }
+                        note = note.substring(0, start); //标题
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            vueJson.setFilters(filters);
+            vueJson.setTitle(note); //标题
+            vueJson.setType(javaColumn.getIsPrimary() ? "selection" : "html"); //类型
             vueJson.setLength(javaColumn.getLength());
             vueJson.setRegStr("");
             vueJson.setIsRequire(false);

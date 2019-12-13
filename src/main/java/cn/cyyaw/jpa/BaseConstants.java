@@ -1,7 +1,5 @@
 package cn.cyyaw.jpa;
 
-import org.omg.CORBA.Object;
-
 import java.util.HashMap;
 import java.util.Map;
 

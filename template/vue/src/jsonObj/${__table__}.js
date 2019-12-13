@@ -1,8 +1,8 @@
 import {EXPLAINFIELD,render,filterRemote} from "@/assets/common/js/global.js";
 
 let json ={
-    "title": "${javaData.tableNote!}",
-    "fieldList": [
+    title: "${javaData.tableNote!}",
+    fieldList: [
         <#list vueJsons as column>
 <#if column_index != 0 >,</#if>{
 <#if column.type == 'selection'>
@@ -39,7 +39,22 @@ let json ={
 <#if column.isWhere>
     isWhere:${column.isWhere?string('true','false')},
 </#if>
-javaWhere:"${column.javaWhere!}",
+<#if column.filters?? && ( column.filters?size > 0 ) >
+    render: render,
+    filterRemote: filterRemote,
+    filters: [
+        <#list column.filters as filters>
+        <#if filters_index != 0>,</#if>{
+            value:${filters.value!},
+            label:"${filters.label!}"
+        }
+        </#list>
+    ],
+</#if>
+<#if column.javaType?? && column.javaType == 'date' >
+    sortable: "custom",
+</#if>
+    javaWhere:"${column.javaWhere!}",
     javaType:"${column.javaType!}"
 }
 </#list>

@@ -1,52 +1,61 @@
 import {EXPLAINFIELD,render,filterRemote} from "@/assets/common/js/global.js";
 
 let json ={
-  "title": "${__Table__}",
-  "fieldList": [
-<#list vueJsons as column>
-    <#if column_index != 0 >,</#if>{
+    "title": "${javaData.tableNote!}",
+    "fieldList": [
+        <#list vueJsons as column>
+<#if column_index != 0 >,</#if>{
 <#if column.type == 'selection'>
-      width:60,
+    width:60,
 </#if>
-      key:"${column.key!}",
-      title:"${column.title!}",
+    key:"${column.key!}",
+    title:"${column.title!}",
 <#if column.type != 'html'>
-      type:"${column.type!}",
+    type:"${column.type!}",
 </#if>
-      length:"${(column.length!255)?c}",
+    length:${(column.length!255)?c},
 <#if column.isRequire>
-      isRequire:${column.isRequire?string('true','false')},
+    isRequire:${column.isRequire?string('true','false')},
 </#if>
 <#if (!(column.regStr)??)>
-      regStr:"${column.regStr!}",
+    regStr:"${column.regStr!}",
 </#if>
 <#if (!(column.message)??)>
-      message:"${column.message!}",
+    message:"${column.message!}",
 </#if>
-<#if (!(column.controlType)??)>
-      controlType:"${column.controlType!}",
+<#if ((column.controlType)??)>
+    controlType:"${column.controlType!}",
 </#if>
 <#if column.javaType == 'integer'>
-      max:"${column.max!}",
-      min:"${column.min!}",
+    max:"${column.max!}",
+    min:"${column.min!}",
 </#if>
 <#if column.format == 'integer'>
-      format:"${column.format!}",
+    format:"${column.format!}",
 </#if>
 <#if column.isShowColumn>
-      isShowColumn:${column.isShowColumn?string('true','false')},
+    isShowColumn:${column.isShowColumn?string('true','false')},
 </#if>
 <#if column.isWhere>
-      isWhere:${column.isWhere?string('true','false')},
+    isWhere:${column.isWhere?string('true','false')},
 </#if>
-      javaWhere:"${column.javaWhere!}",
-      javaType:"${column.javaType!}"
-<#if column.javaType == 'date' >
-      sortable: "custom"
+<#if column.filters?? && ( column.filters?size > 0 ) >
+    render: render,
+    filterRemote: filterRemote,
+    filters: [
+        <#list column.filters as filters>
+        <#if filters_index != 0>,</#if>{
+            value:${filters.value!},
+            label:"${filters.label!}"
+        }
+        </#list>
+    ],
 </#if>
-    }
+    javaWhere:"${column.javaWhere!}",
+    javaType:"${column.javaType!}"
+}
 </#list>
-  ]
+]
 };
 
 //==== 解释json数据
