@@ -8,6 +8,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "c_field", catalog = "")
+@org.hibernate.annotations.Table(appliesTo = "c_field", comment = "字段表")
 public class CField implements Serializable {
     private static final long serialVersionUID = 15736618935283L;
     @Id

@@ -12,6 +12,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "c_interface", catalog = "")
+@org.hibernate.annotations.Table(appliesTo = "c_interface", comment = "接口")
 public class CInterface implements Serializable {
     private static final long serialVersionUID = 1573661893761628L;
     @Id

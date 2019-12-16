@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "c_table", catalog = "")
+@org.hibernate.annotations.Table(appliesTo = "c_table", comment = "数据表")
 public class CTable implements Serializable {
     private static final long serialVersionUID = 1573661893800365L;
     @Id

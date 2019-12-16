@@ -11,14 +11,14 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "c_components", catalog = "")
-@org.hibernate.annotations.Table(appliesTo = "c_components", comment = "组件表")
-public class CComponents implements Serializable {
+@Table(name = "c_page_components", catalog = "")
+@org.hibernate.annotations.Table(appliesTo = "c_page_components", comment = "页面组件")
+public class CPageComponents implements Serializable {
     private static final long serialVersionUID = 15736618935283L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic
-    @Column(name = "[id]", length = 10, unique = true, columnDefinition = "int COMMENT ''")
+    @Column(name = "[id]", length = 10, unique = true, columnDefinition = "int COMMENT 'id'")
     private Integer id;
     @Basic
     @Column(name = "[tid]", length = 45, nullable = true, columnDefinition = "varchar(45) COMMENT 'tid'")
@@ -32,6 +32,17 @@ public class CComponents implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createtime;
+
+    @Basic
+    @Column(name = "[pageid]", length = 45, nullable = true, columnDefinition = "varchar(45) COMMENT '页面ID'")
+    private String pageid;
+    @Basic
+    @Column(name = "[componentsid]", length = 45, nullable = true, columnDefinition = "varchar(45) COMMENT '组件ID'")
+    private String componentsid;
+    @Basic
+    @Column(name = "[sort]", length = 10, unique = true, columnDefinition = "int COMMENT '排序'")
+    private Integer sort;
+
     @Basic
     @Column(name = "[name]", length = 45, nullable = true, columnDefinition = "varchar(45) COMMENT '名称'")
     private String name;
