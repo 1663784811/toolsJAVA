@@ -1,5 +1,8 @@
 package cn.cyyaw.util.entity;
 
+import lombok.Data;
+
+@Data
 public class SelectEntity implements SelectModel {
     /**
      * 页码
@@ -19,38 +22,4 @@ public class SelectEntity implements SelectModel {
      * 1 倒序 DESC
      */
     private int line = 0;
-
-
-
-    public int getPage() {
-        return this.page;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public String getSort() {
-        return sort;
-    }
-
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
-
-    public int getLine() {
-        return line;
-    }
-
-    public void setLine(int line) {
-        this.line = line;
-    }
 }

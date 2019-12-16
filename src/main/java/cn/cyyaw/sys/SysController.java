@@ -2,10 +2,12 @@ package cn.cyyaw.sys;
 
 
 import cn.cyyaw.code.service.CFieldService;
+import cn.cyyaw.code.service.CPageComponentsService;
 import cn.cyyaw.code.service.CTableService;
 import cn.cyyaw.code.table.dao.CFieldDao;
 import cn.cyyaw.code.table.dao.CTableDao;
 import cn.cyyaw.code.table.entity.CField;
+import cn.cyyaw.code.table.entity.CPageComponents;
 import cn.cyyaw.code.table.entity.CTable;
 import cn.cyyaw.jpa.BaseConstants;
 import cn.cyyaw.sys.service.DbService;
@@ -44,6 +46,10 @@ public class SysController {
     @Autowired
     private CodeController codeController;
 
+    @Autowired
+    private CPageComponentsService cPageComponentsService;
+
+
     /**
      * 读取数据库结构
      */
@@ -55,6 +61,21 @@ public class SysController {
         url = url + "?user=" + user + "&password=" + password + "&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
         dbService.readstructure(url, user, password);
         return BaseConstants.statusMessage(true, "读取成功！");
+    }
+
+    /**
+     * 生成页面
+     */
+    @RequestMapping("/createPage")
+    public void createPage(String tid,String template) {
+        CPageComponents cPageComponents = new CPageComponents();
+        cPageComponents.setPageid(tid);
+        List<CPageComponents> byExample = cPageComponentsService.findByExample(cPageComponents);
+
+
+
+
+
     }
 
 
@@ -143,5 +164,6 @@ public class SysController {
         toClient.flush();
         toClient.close();
     }
+
 
 }

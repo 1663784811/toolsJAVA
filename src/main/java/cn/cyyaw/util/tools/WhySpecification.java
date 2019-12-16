@@ -1,6 +1,7 @@
 package cn.cyyaw.util.tools;
 
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
@@ -16,27 +17,20 @@ import java.util.*;
  *
  * @param <T>
  */
+@Slf4j
 public class WhySpecification<T> implements Specification<T> {
-
-    //日志
-    private static final Logger LOGGER = LoggerFactory.getLogger(WhySpecification.class);
-
     /**
      * json查询条件
      */
     private String jsonStr;
-
     /**
      * 允许查询的数组
      */
     private String[] columnArr;
-
     /**
      * 条件描述对象
      */
     private Predicate pred = null;
-
-
     /**
      * 查询条件
      *
@@ -62,7 +56,7 @@ public class WhySpecification<T> implements Specification<T> {
         if (pred != null) {
             return pred;
         }
-        if (null == jsonStr || jsonStr.length()==0) {
+        if (null == jsonStr || jsonStr.length() == 0) {
             return null;
         }
         return getZuHeChaXunPredicate(root, query, cb, jsonStr);
