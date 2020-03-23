@@ -28,7 +28,7 @@ public class CodeController {
     }
 
     public void createCode(List<JavaData> tableList) throws IOException {
-        CreateCode createCode = new CreateCode("template", "I:\\ab");
+        CreateCode createCode = new CreateCode("template", "D:\\ab");
         OperationTools operationTools = new OperationTools();
         InterfaceToos interfaceToos = new InterfaceToos();
         if (null != tableList) {

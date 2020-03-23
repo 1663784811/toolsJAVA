@@ -44,15 +44,15 @@ public class JpaUtils {
                 if (s.length == 2) {
                     if (s[1].equals("desc")) {
                         if (null == sort) {
-                            sort = new Sort(Sort.Direction.DESC, s[0]);
+                            sort = Sort.by(Sort.Direction.DESC,s[0] );
                         } else {
-                            sort.and(new Sort(Sort.Direction.DESC, s[0]));
+                            sort.and(Sort.by(Sort.Direction.DESC, s[0]));
                         }
                     } else {
                         if (null == sort) {
-                            sort = new Sort(Sort.Direction.ASC, s[0]);
+                            sort = Sort.by(Sort.Direction.ASC, s[0]);
                         } else {
-                            sort.and(new Sort(Sort.Direction.ASC, s[0]));
+                            sort.and(Sort.by(Sort.Direction.ASC, s[0]));
                         }
                     }
                 }
