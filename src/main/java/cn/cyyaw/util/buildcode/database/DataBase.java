@@ -4,6 +4,7 @@ package cn.cyyaw.util.buildcode.database;
 import cn.cyyaw.util.buildcode.code.TypeTools;
 import cn.cyyaw.util.buildcode.config.DataConfig;
 import cn.cyyaw.util.buildcode.entity.java.*;
+import org.springframework.util.StringUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class DataBase {
     /**
      * 获取数据表信息---- 列表
      */
-    public List<JavaData> getTableList() throws SQLException {
+    public List<JavaData> getTableList(String table) throws SQLException {
         ArrayList<JavaData> javaDataArrayList = new ArrayList<JavaData>();
         DatabaseMetaData metaData = connection.getMetaData();
         ResultSet tables = metaData.getTables(connection.getCatalog(), "%", "%", null);
@@ -44,7 +45,11 @@ public class DataBase {
                 javaData.setTableType(tables.getString("TABLE_TYPE"));       //数据表类型  （表 ， 视图，。。。）
                 List<JavaColumn> javaColumnList = getColumnList(table_name);
                 javaData.setJavaColumns(javaColumnList);                                 //字段
-                javaDataArrayList.add(javaData);
+                if(StringUtils.isEmpty(table)){
+                    javaDataArrayList.add(javaData);
+                }else if(table.equals(table_name)){
+                    javaDataArrayList.add(javaData);
+                }
             }
         }
         return javaDataArrayList;

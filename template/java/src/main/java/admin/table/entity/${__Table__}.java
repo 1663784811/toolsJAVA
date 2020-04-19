@@ -11,7 +11,8 @@ import java.math.BigDecimal;
 
 @Data
 @Entity
-@Table(name = "${javaData.table}", catalog = "")
+@Table(name = "${javaData.table}")
+@org.hibernate.annotations.Table(appliesTo = "${javaData.table}", comment = "${javaData.tableNote}")
 public class ${__Table__} implements Serializable{
     private static final long serialVersionUID = ${operationTools.getserialVersionUID()}L;
 <#-- ============================     字段列表     ======================== -->
@@ -31,6 +32,7 @@ public class ${__Table__} implements Serializable{
     <#else>
     @Basic
     ${interfaceToos.column(column)}
+    <#--=======  是否是时间类型  ======-->
     <#if column.javaType == 'Date' >
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

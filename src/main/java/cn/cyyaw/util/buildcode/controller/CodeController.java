@@ -23,7 +23,7 @@ public class CodeController {
     public void buildCode(String url, String user, String pwd, String table) throws SQLException, ClassNotFoundException, IOException {
         url = url + "?user=" + user + "&password=" + pwd + "&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
         DataBase dataBase = new DataBase("com.mysql.cj.jdbc.Driver", url, user, pwd);
-        List<JavaData> tableList = dataBase.getTableList();
+        List<JavaData> tableList = dataBase.getTableList(table);
         createCode(tableList);
     }
 

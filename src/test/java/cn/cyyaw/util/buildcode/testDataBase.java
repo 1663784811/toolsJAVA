@@ -21,7 +21,7 @@ public class testDataBase {
     @Test
     public void test01() throws SQLException, ClassNotFoundException {
         DataBase dataBase = new DataBase();
-        List<JavaData> tableList = dataBase.getTableList();
+        List<JavaData> tableList = dataBase.getTableList(null);
         for (int i = 0; i < tableList.size(); i++) {
             JavaData javaData = tableList.get(i);
             System.out.println("=======================");

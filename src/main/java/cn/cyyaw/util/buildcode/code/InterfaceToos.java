@@ -14,11 +14,12 @@ public class InterfaceToos {
      * @return @Column(name = "address" , length = 45 , columnDefinition = "varchar(45)" )
      */
     public static String column(JavaColumn javaColumn) {
-        return "@Column(name=\"" + javaColumn.getColumnName() + "\""
+        String columnStr = "@Column(name=\"" + javaColumn.getColumnName() + "\""
                 + OperationTools.dbTypeLength(javaColumn)
                 + OperationTools.dbTypeUnique(javaColumn)
                 + OperationTools.dbTypeNull(javaColumn)
                 + OperationTools.dbTypeEntity(javaColumn)
                 + ")";
+        return columnStr;
     }
 }

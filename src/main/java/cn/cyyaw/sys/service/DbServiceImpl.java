@@ -31,7 +31,7 @@ public class DbServiceImpl implements DbService {
     @Override
     public void readstructure(String url, String user, String password) throws SQLException, ClassNotFoundException {
         DataBase dataBase = new DataBase("com.mysql.cj.jdbc.Driver", url, user, password);
-        List<JavaData> tableList = dataBase.getTableList();
+        List<JavaData> tableList = dataBase.getTableList(null);
         if (null != tableList && tableList.size() > 0) {
             for (int i = 0; i < tableList.size(); i++) {
                 JavaData javaData = tableList.get(i);

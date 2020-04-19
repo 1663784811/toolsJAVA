@@ -11,6 +11,11 @@ import java.util.Random;
 public class OperationTools {
 
 
+    /**
+     * 获取表主键
+     * @param javaColumnList
+     * @return
+     */
     public static JavaColumn getPK(List<JavaColumn> javaColumnList) {
         if (null != javaColumnList && javaColumnList.size() > 0) {
             for (int i = 0; i < javaColumnList.size(); i++) {
@@ -25,7 +30,7 @@ public class OperationTools {
 
 
     /**
-     * 生成注解数据唯一
+     * 生成注解数据不能为null
      *
      * @return
      */
@@ -59,13 +64,35 @@ public class OperationTools {
      */
     public static String dbTypeEntity(JavaColumn javaColumn) {
         if (null != javaColumn) {
-            String dbType = allToLowerCase(javaColumn.getDbType());
-            if (dbType.equals("text") || dbType.equals("int") || dbType.equals("datetime")) {
-                return ", columnDefinition = \"" + dbType + dbTypeComment(javaColumn) + "\"";
-            } else if (dbType.equals("varchar")) {
-                return ", columnDefinition = \"" + dbType + "(" + javaColumn.getLength() + ")" + dbTypeComment(javaColumn) + "\"";
-            } else if (dbType.equals("decimal")) {
-                return ", columnDefinition = \"" + dbType + "(" + javaColumn.getLength() + ",2 )" + dbTypeComment(javaColumn) + "\"";
+           return  ", columnDefinition = \"" + dbType(javaColumn) + dbTypeDefaultValue(javaColumn) + dbTypeComment(javaColumn) + "\"";
+        }else {
+            return  "";
+        }
+    }
+
+    public static String dbType(JavaColumn javaColumn){
+        String dbType = allToLowerCase(javaColumn.getDbType());
+        if (dbType.equals("text") || dbType.equals("int") || dbType.equals("datetime")) {
+            return dbType ;
+        } else if (dbType.equals("varchar")) {
+            return dbType + "(" + javaColumn.getLength() + ")";
+        } else if (dbType.equals("decimal")) {
+            return dbType + "(" + javaColumn.getLength() + ",2 )";
+        }
+        return "";
+    }
+
+    /**
+     * 生成默认值
+     *
+     * @param javaColumn
+     * @return
+     */
+    public static String dbTypeDefaultValue(JavaColumn javaColumn) {
+        if (null != javaColumn) {
+            String defaultValue = javaColumn.getDefaultValue();
+            if (defaultValue != null) {
+                return " default '" + defaultValue + "'";
             }
         }
         return "";

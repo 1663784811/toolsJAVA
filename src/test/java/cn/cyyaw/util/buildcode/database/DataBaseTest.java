@@ -67,7 +67,7 @@ public class DataBaseTest {
 
     @Test
     public void test05() throws SQLException {
-        List<JavaData> list = base.getTableList();
+        List<JavaData> list = base.getTableList(null);
         if (list != null && list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
                 JavaData obj = list.get(i);
