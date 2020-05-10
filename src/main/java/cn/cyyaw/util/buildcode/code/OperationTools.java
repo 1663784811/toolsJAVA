@@ -37,7 +37,7 @@ public class OperationTools {
     public static String dbTypeNull(JavaColumn javaColumn) {
         if (null != javaColumn) {
             if (!javaColumn.getIsNull()) {
-                return " ,nullable = true";
+                return " ,nullable = false";
             }
         }
         return "";
