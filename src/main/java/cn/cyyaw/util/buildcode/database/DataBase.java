@@ -78,7 +78,7 @@ public class DataBase {
             javaColumn.setDefaultValue(columns.getString("COLUMN_DEF"));//默认值
             javaColumn.setNote(columns.getString("REMARKS"));        //注释
             javaColumn.setIsAutoIncrement(columns.getString("IS_AUTOINCREMENT").equals("YES"));//是否自增加
-            javaColumn.setIsNull(columns.getString("NULLABLE").equals("0"));  //是否可以为null
+            javaColumn.setIsNull(columns.getString("NULLABLE").equals("1"));  //是否可以为null
             //===============================
             javaColumnList.add(javaColumn);
         }

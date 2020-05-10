@@ -15,7 +15,7 @@ public class InterfaceToos {
      */
     public static String column(JavaColumn javaColumn) {
         String columnStr = "@Column(name=\"" + javaColumn.getColumnName() + "\""
-                + OperationTools.dbTypeLength(javaColumn)
+                // + OperationTools.dbTypeLength(javaColumn)
                 + OperationTools.dbTypeUnique(javaColumn)
                 + OperationTools.dbTypeNull(javaColumn)
                 + OperationTools.dbTypeEntity(javaColumn)

@@ -64,12 +64,20 @@ public class OperationTools {
      */
     public static String dbTypeEntity(JavaColumn javaColumn) {
         if (null != javaColumn) {
-           return  ", columnDefinition = \"" + dbType(javaColumn) + dbTypeDefaultValue(javaColumn) + dbTypeComment(javaColumn) + "\"";
+           return  ", columnDefinition = \"" + dbType(javaColumn)
+                   + (javaColumn.getIsAutoIncrement() ? " auto_increment" : "" )
+                   + dbTypeDefaultValue(javaColumn) + dbTypeComment(javaColumn)
+                   + "\"";
         }else {
             return  "";
         }
     }
 
+    /**
+     * 数据库类型转java类型
+     * @param javaColumn
+     * @return
+     */
     public static String dbType(JavaColumn javaColumn){
         String dbType = allToLowerCase(javaColumn.getDbType());
         if (dbType.equals("text") || dbType.equals("int") || dbType.equals("datetime")) {
