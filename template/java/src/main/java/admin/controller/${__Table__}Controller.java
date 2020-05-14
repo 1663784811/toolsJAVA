@@ -90,7 +90,7 @@ public class ${__Table__}Controller {
     /**
      * 表:${javaData.table} ===> 所有:带条件
      */
-    @RequestMapping(value = "/findAll${__Table__}", method = RequestMethod.GET)
+    @GetMapping(value = "/findAll${__Table__}")
     public void findAll${__Table__}(HttpServletResponse response, String jsonStr, SelectEntity selectEntity) {
         List<${__Table__}> list = ${__table__}Service.findAll(jsonStr, selectEntity);
         ResponseUtils.responseJsonFilter(response, list,${__Table__}Const.filterselectColumnArr);
@@ -99,7 +99,7 @@ public class ${__Table__}Controller {
     /**
      * 分页条件查询
      */
-    @RequestMapping(value = "/findPage${__Table__}", method = RequestMethod.GET)
+    @GetMapping(value = "/findPage${__Table__}")
     public void findPage${__Table__}(HttpServletResponse response,String jsonStr,  SelectEntity selectEntity) {
         PageRequest pageRequest = JpaUtils.getPageRequest(selectEntity);
         Page<${__Table__}> page = ${__table__}Service.findPage(jsonStr, pageRequest);
@@ -109,7 +109,7 @@ public class ${__Table__}Controller {
     /**
      * 根据ID查询
      */
-    @RequestMapping(value = "/findId${__Table__}", method = RequestMethod.GET)
+    @GetMapping(value = "/findId${__Table__}")
     public void findId${__Table__}(HttpServletResponse response,@RequestParam ${__pkJava__} ${__pk__}) {
         ${__Table__} obj = ${__table__}Service.findId(${__pk__});
         ResponseUtils.responseJsonFilter(response, obj,${__Table__}Const.filterselectColumnArr);
@@ -151,7 +151,7 @@ public class ${__Table__}Controller {
     /**
      * 删除
      */
-    @RequestMapping(value = "/del${__Table__}")
+    @PostMapping(value = "/del${__Table__}")
     public Map del${__Table__}( @RequestBody ${__pkJava__} ${__pk__}Arr[]) {
         ${__table__}Service.del(${__pk__}Arr);
         return BaseConstants.tableDelSuccess;
@@ -162,7 +162,7 @@ public class ${__Table__}Controller {
     /**
      * 外键查询
      */
-    @RequestMapping(value = "/fk${__Table__}Find${operationTools.indexToUpperCase(column.pkTableName)}")
+    @GetMapping(value = "/fk${__Table__}Find${operationTools.indexToUpperCase(column.pkTableName)}")
     @ResponseBody
     public List fk${__Table__}Find${operationTools.indexToUpperCase(column.pkTableName)}(${column.javaType} ${operationTools.indexToLowerCase(column.pkTableColumn)}) {
         List<${__Table__}> ${__table__}List = ${__table__}Service.fk${__Table__}Find${operationTools.indexToUpperCase(column.pkTableName)}(${operationTools.indexToLowerCase(column.pkTableColumn)});
