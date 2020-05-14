@@ -20,6 +20,7 @@ public class ${__Table__} implements Serializable{
     <#-- ============================    是否是主键     ======================== -->
     <#if column.isPrimary>
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     </#if>
     <#-- ============================     是否是外键     ======================== -->
     <#if column.isFk>
