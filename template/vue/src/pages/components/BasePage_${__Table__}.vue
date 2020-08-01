@@ -58,9 +58,7 @@
 </template>
 
 <script>
-    import '@/assets/admin/css/adminPage.css';
-    import BaseOperation from '@/components/admin/BaseOperation';
-    import BaseWindow from '@/components/BaseWindow';
+    import '@/assets/css/adminPage.css';
     import {
         TitleJson,
         addFieldDataJson,
@@ -68,13 +66,7 @@
         TableHeaderJson,
         searchWhereJson
     } from "@${basePathVue}/config/jsonObj/${__table__}";
-
-    import {
-        API_findPage${__Table__},
-        API_del${__Table__},
-        API_save${__Table__}
-    } from "@${basePathVue}/config/api/${__table__}";
-
+    import { API_Common_Query, API_Common_Save, API_Common_Delete } from "@/config/api/getData";
 
     export default {
         name: "BasePage_${__Table__}",
@@ -159,11 +151,7 @@
             delData: function () {
                 this.isDelLoading = true;
                 let selectData = this.selectData;
-                let idArr = [];
-                for (let i = 0; i < selectData.length; i++) {
-                    idArr.push(selectData[i].id);
-                }
-                this.delIdFn(idArr);
+                this.delIdFn(selectData);
             },
             //点击搜索
             clickSearchBtn: function () {
@@ -198,7 +186,10 @@
                 this.tableData = [];
                 this.selectData = [];
                 this.tableLoading = true;
-                API_findPage${__Table__}(this.requestTableData).then(res => {
+                API_Common_Query({
+                    _code: 'dd',
+                    ...this.requestTableData
+                }).then(res => {
                     this.requestTableData.page = res.page;
                     this.requestTableData.size = res.size;
                     this.requestTableData.total = res.total;
@@ -211,7 +202,10 @@
             },
             submitDataFn: function () {
                 this.winLoadding = true;
-                API_save${__Table__}(this.submitData).then(() => {
+                API_Common_Save({
+                    table:'w_banner',
+                    data: [this.submitData]
+                }).then(() => {
                     this.winShow = false;
                     this.winLoadding = false;
                     this.$Message.success("保存成功");
@@ -224,7 +218,10 @@
             },
             //根ID删除数据
             delIdFn: function (sendObj) {
-                API_del${__Table__}(sendObj).then(responseData => {
+                API_Common_Delete({
+                    table: '${__table__}',
+                    data: sendObj
+                }).then(responseData => {
                     this.$Message.success(responseData.message);
                     this.isDelInfo = false;
                     this.isDelLoading = false;
