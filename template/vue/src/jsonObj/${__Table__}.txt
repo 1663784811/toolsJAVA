@@ -15,10 +15,10 @@ let json ={
 </#if>
     "length":${(column.length!255)?c},
 <#if column.isRequire>
-    "isRequire":${column.isRequire?string('true','false')},
+    "isrequire":${column.isRequire?string('true','false')},
 </#if>
 <#if (!(column.regStr)??)>
-    "regStr":"${column.regStr!}",
+    "regstr":"${column.regStr!}",
 </#if>
 <#if (!(column.message)??)>
     "message":"${column.message!}",
@@ -34,10 +34,10 @@ let json ={
     "format":"${column.format!}",
 </#if>
 <#if column.isShowColumn>
-    "isShowColumn":${column.isShowColumn?string('true','false')},
+    "isshowcolumn":${column.isShowColumn?string('true','false')},
 </#if>
 <#if column.isWhere>
-    "isWhere":${column.isWhere?string('true','false')},
+    "iswhere":${column.isWhere?string('true','false')},
 </#if>
 <#if column.filters?? && ( column.filters?size > 0 ) >
     "render": render,
@@ -51,8 +51,8 @@ let json ={
         </#list>
     ],
 </#if>
-    "javaWhere":"${column.javaWhere!}",
-    "javaType":"${column.javaType!}"
+    "javawhere":"${column.javaWhere!}",
+    "javatype":"${column.javaType!}"
 }
 </#list>
 ]

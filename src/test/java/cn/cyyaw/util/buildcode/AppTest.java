@@ -14,7 +14,7 @@ public class AppTest {
 
         CodeController codeController = new CodeController();
 
-        codeController.buildCode("jdbc:mysql://127.0.0.1:3306/cyyaw_store", "root", "because", null);
+        codeController.buildCode("jdbc:mysql://127.0.0.1:3306/cyyaw_order", "root", "because", null);
 
     }
 }
