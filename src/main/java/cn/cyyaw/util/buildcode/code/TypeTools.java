@@ -22,13 +22,20 @@ public class TypeTools {
      */
     public static String dbType2JavaType(String type) {
         String objType = null;
-        if (type.equals("INT") || type.equals("int")
+        if (
+                type.equals("INT") || type.equals("int")
+                || type.equals("INT UNSIGNED") || type.equals("int unsigned")
+                || type.equals("TINYINT UNSIGNED") || type.equals("tinyint unsigned")
                 || type.equals("TINYINT") || type.equals("tinyint")
                 || type.equals("SMALLINT") || type.equals("smallint")
                 || type.equals("MEDIUMINT") || type.equals("mediumint")
+                || type.equals("SMALLINT UNSIGNED") || type.equals("smallint unsigned")
         ) {
             objType = "Integer";
-        } else if (type.equals("BIGINT") || type.equals("bigint")) {
+        } else if (
+                type.equals("BIGINT") || type.equals("bigint")
+               || type.equals("BIGINT UNSIGNED") || type.equals("bigint unsigned")
+        ) {
             objType = "BigInteger";
         } else if (type.equals("FLOAT") || type.equals("float")) {
             objType = "Float";
@@ -43,7 +50,9 @@ public class TypeTools {
             //============= 日期
             objType = "Date";
 
-        } else if (type.equals("VARCHAR") || type.equals("varchar")
+        } else if (
+                type.equals("VARCHAR") || type.equals("varchar")
+                || type.equals("CHAR") || type.equals("char")
                 || type.equals("TEXT") || type.equals("text")
                 || type.equals("TINYTEXT") || type.equals("tinytext")
                 || type.equals("MEDIUMTEXT") || type.equals("mediumtext")
@@ -51,9 +60,22 @@ public class TypeTools {
         ) {
             //============= 数值字符
             objType = "String";
-        } else if (type.equals("DECIMAL") || type.equals("decimal")) {
+        } else if (
+                type.equals("DECIMAL") || type.equals("decimal")
+                || type.equals("DECIMAL UNSIGNED") || type.equals("decimal unsigned")
+        ) {
             //============= 数值字符
             objType = "BigDecimal";
+        } else if (
+                type.equals("BIT") || type.equals("bit")
+        ) {
+            //============= 数值字符
+            objType = "Byte";
+        }else if( type.equals("Blob") || type.equals("blob")){
+
+        }
+        if(objType==null){
+            System.out.println("-------------");
         }
         return objType;
     }
