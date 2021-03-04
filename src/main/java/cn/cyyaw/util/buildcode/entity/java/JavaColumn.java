@@ -11,6 +11,7 @@ public class JavaColumn {
     private String dbType;              //数据库字段类型
     private Integer length;             //长度
     private String javaType;            //java 类型
+    private String javaField;           // java 字段
     private String defaultValue;        //默认值
     private String note;                //注释
     private Boolean isAutoIncrement;    //是否自增加

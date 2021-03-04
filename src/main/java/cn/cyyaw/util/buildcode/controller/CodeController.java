@@ -39,6 +39,9 @@ public class CodeController {
                     List<JavaColumn> javaColumns = javaData.getJavaColumns();
                     Map<String, Object> map = new HashMap();
                     //===========================================
+                    map.put("mybatisMapper", "cn.cyyaw.weixin.admin");          //基础包
+
+
                     map.put("basePackage", "cn.cyyaw.weixin.admin");          //基础包
                     map.put("basePathVue", "");                   //基础路径
                     //===========================================

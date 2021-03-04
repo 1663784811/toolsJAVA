@@ -1,6 +1,7 @@
 package cn.cyyaw.util.buildcode.database;
 
 
+import cn.cyyaw.util.buildcode.code.OperationTools;
 import cn.cyyaw.util.buildcode.code.TypeTools;
 import cn.cyyaw.util.buildcode.config.DataConfig;
 import cn.cyyaw.util.buildcode.entity.java.*;
@@ -85,6 +86,7 @@ public class DataBase {
             javaColumn.setDbType(type);                                          //数据库字段类型
             javaColumn.setLength(columns.getInt("COLUMN_SIZE"));     //长度
             javaColumn.setJavaType(TypeTools.dbType2JavaType(type));             //java 类型
+            javaColumn.setJavaField(OperationTools.indexToLowerCase(columns.getString("COLUMN_NAME")));
             javaColumn.setDefaultValue(columns.getString("COLUMN_DEF"));//默认值
             javaColumn.setNote(columns.getString("REMARKS"));        //注释
             javaColumn.setIsAutoIncrement(columns.getString("IS_AUTOINCREMENT").equals("YES"));//是否自增加

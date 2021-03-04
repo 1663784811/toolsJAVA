@@ -120,7 +120,7 @@
   <insert id="insert" parameterType="com.cf.carpark.domain.${__Table__}" >
     insert into ${javaData.table} (<#list javaColumns as column>${column.columnName}<#if (javaColumns?size-1)!=column_index>,</#if></#list>)
     values (
-      <#list javaColumns as column>${column.columnName} = ${r'#{'+column.columnName+',jdbcType='+column.dbType+'}'}<#if (javaColumns?size-1)!=column_index>,</#if>
+      <#list javaColumns as column>${r'#{'+column.javaField+',jdbcType='+column.dbType+'}'}<#if (javaColumns?size-1)!=column_index>,</#if>
         </#list>
         )
   </insert>
@@ -130,15 +130,15 @@
     insert into ${javaData.table}
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <#list javaColumns as column>
-      <if test="${column.columnName} != null" >
+      <if test="${column.javaField} != null" >
         ${column.columnName},
       </if>
       </#list>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <#list javaColumns as column>
-      <if test="id != null" >
-        ${r'#{'+column.columnName+',jdbcType='+column.dbType+'}'}
+      <if test="${column.javaField} != null" >
+        ${r'#{'+column.javaField+',jdbcType='+column.dbType+'},'}
       </if>
       </#list>
     </trim>
@@ -157,8 +157,8 @@
     update ${javaData.table}
     <set >
       <#list javaColumns as column>
-      <if test="record.id != null" >
-        ${column.columnName} = ${r'#{record.'+column.columnName+',jdbcType='+column.dbType+'}'}
+      <if test="record.${column.javaField} != null" >
+        ${column.columnName} = ${r'#{record.'+column.javaField+',jdbcType='+column.dbType+'}'},
       </if>
       </#list>
     </set>
@@ -172,7 +172,7 @@
     update ${javaData.table}
     set
     <#list javaColumns as column>
-        ${column.columnName} = ${r'#{record.'+column.columnName+',jdbcType='+column.dbType+'}'}<#if (javaColumns?size-1)!=column_index>,</#if>
+        ${column.columnName} = ${r'#{record.'+column.javaField+',jdbcType='+column.dbType+'}'}<#if (javaColumns?size-1)!=column_index>,</#if>
     </#list>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -185,8 +185,8 @@
     <set >
       <#list javaColumns as column>
       <#if !column.isPrimary>
-      <if test="name != null" >
-        ${column.columnName} = ${r'#{record.'+column.columnName+',jdbcType='+column.dbType+'}'},
+      <if test="${column.javaField} != null" >
+        ${column.columnName} = ${r'#{'+column.javaField+',jdbcType='+column.dbType+'}'},
       </if>
       </#if>
       </#list>
@@ -200,7 +200,7 @@
     set
     <#list javaColumns as column>
     <#if !column.isPrimary>
-        ${column.columnName} = ${r'#{record.'+column.columnName+',jdbcType='+column.dbType+'}'}<#if (javaColumns?size-1)!=column_index>,</#if>
+        ${column.columnName} = ${r'#{'+column.javaField+',jdbcType='+column.dbType+'}'}<#if (javaColumns?size-1)!=column_index>,</#if>
     </#if>
     </#list>
     where  ${operationTools.getPK(javaColumns).columnName} = ${r'#{'+operationTools.getPK(javaColumns).columnName+',jdbcType='+operationTools.getPK(javaColumns).dbType+'}'}
