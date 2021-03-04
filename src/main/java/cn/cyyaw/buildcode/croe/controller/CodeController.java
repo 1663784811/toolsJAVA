@@ -1,12 +1,13 @@
 package cn.cyyaw.buildcode.croe.controller;
 
 import cn.cyyaw.buildcode.croe.code.CreateCode;
-import cn.cyyaw.buildcode.croe.database.DataBase;
 import cn.cyyaw.buildcode.croe.code.InterfaceToos;
 import cn.cyyaw.buildcode.croe.code.OperationTools;
 import cn.cyyaw.buildcode.croe.code.TypeTools;
+import cn.cyyaw.buildcode.croe.database.DataBase;
 import cn.cyyaw.buildcode.croe.entity.java.JavaColumn;
 import cn.cyyaw.buildcode.croe.entity.java.JavaData;
+import cn.cyyaw.buildcode.mybatis.MybatisXmlMapper;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -39,8 +40,6 @@ public class CodeController {
                     List<JavaColumn> javaColumns = javaData.getJavaColumns();
                     Map<String, Object> map = new HashMap();
                     //===========================================
-                    map.put("mybatisMapper", "cn.cyyaw.weixin.admin");          //基础包
-
 
                     map.put("basePackage", "cn.cyyaw.weixin.admin");          //基础包
                     map.put("basePathVue", "");                   //基础路径
@@ -53,12 +52,14 @@ public class CodeController {
                     map.put("interfaceToos", interfaceToos);//工具类
                     map.put("__Table__", operationTools.indexToUpperCase(javaData.getTable()));// 表名首字母大写
                     map.put("__table__", operationTools.indexToLowerCase(javaData.getTable()));// 表名首字母小写
-
                     map.put("__Pk__", operationTools.indexToUpperCase(operationTools.getPK(javaColumns).getColumnName()));// 主键首字母大写
                     map.put("__pk__", operationTools.indexToLowerCase(operationTools.getPK(javaColumns).getColumnName()));// 主键首字母小写
                     map.put("__pk_all__", operationTools.allToLowerCase(operationTools.getPK(javaColumns).getColumnName()));// 主键all母小写
-
                     map.put("__pkJava__", operationTools.getPK(javaColumns).getJavaType());// 主键java首字母大写
+
+
+                    //===========================================  扩展
+                    map.put("mybatisXml", new MybatisXmlMapper(javaData));
 
                     //===========================================  常用变量
                     createCode.setDataMap(map);
