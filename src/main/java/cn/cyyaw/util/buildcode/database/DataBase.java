@@ -57,6 +57,16 @@ public class DataBase {
 
 
     /**
+     * 数据库类型转换
+     */
+    private String dbTypeChange(String type){
+        if(type.indexOf("UNSIGNED")!=-1){
+            type = type.substring(0,type.indexOf("UNSIGNED")-1);
+        }
+        return type;
+    }
+
+    /**
      * 获取表字段信息----- 列表
      *
      * @param tableName 数据表名
@@ -69,7 +79,7 @@ public class DataBase {
         ResultSet columns = metaData.getColumns(connection.getCatalog(), "%", tableName, "%");
         while (columns.next()) {
             JavaColumn javaColumn = new JavaColumn();
-            String type = columns.getString("TYPE_NAME");
+            String type = dbTypeChange(columns.getString("TYPE_NAME"));
             //===============================
             javaColumn.setColumnName(columns.getString("COLUMN_NAME"));    //字段名
             javaColumn.setDbType(type);                                          //数据库字段类型
