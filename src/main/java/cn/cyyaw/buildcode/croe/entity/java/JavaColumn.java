@@ -31,5 +31,6 @@ public class JavaColumn {
     private String indexType;   //索引类型
 
 
+    private String mybatisType;
 
 }

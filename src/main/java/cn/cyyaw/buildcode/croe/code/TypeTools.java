@@ -246,4 +246,10 @@ public class TypeTools {
         return vueJson;
     }
 
+    public static String dbType2MybatisType(String type) {
+        if("INT".equals(type)){
+            return "INTEGER";
+        }
+        return type;
+    }
 }

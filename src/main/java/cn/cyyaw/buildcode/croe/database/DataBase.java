@@ -84,6 +84,7 @@ public class DataBase {
             //===============================
             javaColumn.setColumnName(columns.getString("COLUMN_NAME"));    //字段名
             javaColumn.setDbType(type);                                          //数据库字段类型
+            javaColumn.setMybatisType(TypeTools.dbType2MybatisType(type));
             javaColumn.setLength(columns.getInt("COLUMN_SIZE"));     //长度
             javaColumn.setJavaType(TypeTools.dbType2JavaType(type));             //java 类型
             javaColumn.setJavaField(OperationTools.indexToLowerCase(columns.getString("COLUMN_NAME")));
