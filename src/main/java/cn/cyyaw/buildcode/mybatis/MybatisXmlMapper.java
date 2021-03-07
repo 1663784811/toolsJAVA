@@ -290,8 +290,19 @@ public class MybatisXmlMapper {
     public String getUpdateByPrimaryKey(){
         String xml = "  <update id=\"updateByPrimaryKey\" parameterType=\""+xmlPackage+"."+OperationTools.indexToUpperCase(table)+"\" >\n" +
                 "    update "+table+"\n" +
-                "    set \n\t\t" +dbfiel_+"\n"+
-                "    where  "+primaryKey.getColumnName()+" = #{"+OperationTools.indexToLowerCase(primaryKey.getColumnName())+",jdbcType="+primaryKey.getMybatisType()+"}\n" +
+                "    set \n\t";
+        for (int i = 0; i < javaColumns.size(); i++) {
+            JavaColumn javaColumn = javaColumns.get(i);
+            if(!javaColumn.getIsPrimary()){
+                 xml+="        "+javaColumn.getColumnName()+" = #{"+OperationTools.indexToLowerCase(javaColumn.getColumnName())+",jdbcType="+javaColumn.getMybatisType()+"}";
+                 if(i+1!= javaColumns.size()){
+                     xml+=",\n";
+                 }else{
+                     xml+="\n";
+                 }
+            }
+        }
+        xml+="    where  "+primaryKey.getColumnName()+" = #{"+OperationTools.indexToLowerCase(primaryKey.getColumnName())+",jdbcType="+primaryKey.getMybatisType()+"}\n" +
                 "  </update>";
         return xml;
     }
